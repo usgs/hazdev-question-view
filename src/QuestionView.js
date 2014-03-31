@@ -15,12 +15,13 @@ define([
 		//required:false,     // To mark a question as being required to answer
 		currentAnswer:null,
 		answers:[
-    	{
-      	value:null,
-      	title:null
-    	}
-  	]
+			{
+				value:null,
+				title:null
+			}
+		]
 	};
+	var ID_SEQUENCE = 0;
 
 
 	// ----------------------------------------------------------------------
@@ -72,7 +73,7 @@ define([
 	 * @param options {Object}
 	 *        item being added to list.
 	 */
-	QuestionView.prototype.addAnswer = function (options) {
+	QuestionView.prototype.addAnswer = function () {
 		// assign unique ids to this items elements
 		var id = ++ID_SEQUENCE;
 		var answerId = 'answer-list-' + id;
@@ -89,7 +90,6 @@ define([
 			answerEl.appendChild(answerContent);
 		}
 
-		var _this = this;
 		// save reference to tab and elements
 		var answer = {
 			answerEl: answerEl
@@ -104,4 +104,4 @@ define([
 	};
 
 	return QuestionView;
-}
+});

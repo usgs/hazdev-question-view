@@ -2,7 +2,9 @@ require.config({
 	baseUrl: '..',
 	paths: {
 		mocha: 'mocha/mocha',
-		chai: 'chai/chai'
+		chai: 'chai/chai',
+		'mvc': '/hazdev-webutils/src/mvc',
+    'util': '/hazdev-webutils/src/util'
 	},
 	shim: {
 		mocha: {

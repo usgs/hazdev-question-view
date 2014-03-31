@@ -18,7 +18,8 @@
 		"test"
 	],
 	"dependencies": {
-		"requirejs": "~2.1.6"
+		"requirejs": "~2.1.6",
+		"hazdev-webutils": "~0.0.4"
 	},
 	"devDependencies": {}
 }

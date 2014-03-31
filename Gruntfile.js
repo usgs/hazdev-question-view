@@ -13,6 +13,7 @@ module.exports = function (grunt) {
 	var appConfig = {
 		src: 'src',
 		test: 'test',
+		temp: '.tmp'
 	};
 
 	// TODO :: Read this from .bowerrc
@@ -29,7 +30,7 @@ module.exports = function (grunt) {
 				tasks: ['concurrent:scripts']
 			},
 			scss: {
-				files: ['<%= app.dev %>/**/*.scss'],
+				files: ['<%= app.src %>/**/*.scss'],
 				tasks: ['compass:dev']
 			},
 			tests: {
@@ -78,7 +79,7 @@ module.exports = function (grunt) {
 			dev: {
 				options: {
 					sassDir: '<%= app.src %>',
-					cssDir: '<%= app.src %>',
+					cssDir: '<%= app.temp %>',
 					environment: 'development'
 				}
 			}

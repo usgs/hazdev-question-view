@@ -72,7 +72,7 @@ define([
 	 * @param options {Object}
 	 *        item being added to list.
 	 */
-	TabList.prototype.addAnswer = function (options) {
+	QuestionView.prototype.addAnswer = function (options) {
 		// assign unique ids to this items elements
 		var id = ++ID_SEQUENCE;
 		var answerId = 'answer-list-' + id;

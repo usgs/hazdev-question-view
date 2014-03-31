@@ -26,15 +26,15 @@ module.exports = function (grunt) {
 		bower: bowerConfig,
 		watch: {
 			scripts: {
-				files: ['<%= app.src %>/**/*.js'],
+				files: ['<%= app.src %>/**.js'],
 				tasks: ['concurrent:scripts']
 			},
 			scss: {
-				files: ['<%= app.src %>/**/*.scss'],
+				files: ['<%= app.src %>/**.scss'],
 				tasks: ['compass:dev']
 			},
 			tests: {
-				files: ['<%= app.test %>/*.html', '<%= app.test %>/**/*.js'],
+				files: ['<%= app.test %>/*.html', '<%= app.test %>/**.js'],
 				tasks: ['concurrent:tests']
 			},
 			gruntfile: {
@@ -72,8 +72,8 @@ module.exports = function (grunt) {
 				jshintrc: '.jshintrc'
 			},
 			gruntfile: ['Gruntfile.js'],
-			scripts: ['<%= app.src %>/**/*.js'],
-			tests: ['<%= app.test %>/**/*.js']
+			scripts: ['<%= app.src %>/**.js'],
+			tests: ['<%= app.test %>/**.js']
 		},
 		compass: {
 			dev: {
@@ -108,7 +108,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', [
 		'connect:dev',
 		'compass:dev',
-		'mocha_phantomjs',
+		'concurrent:scripts',
 		'watch'
 	]);
 };

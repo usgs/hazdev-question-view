@@ -7,19 +7,13 @@ define([
 	'use strict';
 
 	var DEFAULTS = {
-		el:document.createElement('div'),
-		title:null,        // The question being asked
-		multiSelect:false, // For radio buttons or checkboxes, radio is default
-		allowOther:false,  // To create a text field when other is selected
-		//expanded:false,    // Expanded view for displaying list of answers
+		el:document.createElement('section'),
+		title:null,         // The question being asked
+		multiSelect:false,  // For radio buttons or checkboxes, radio is default
+		allowOther:false,   // To create a text field when other is selected
+		//expanded:false,     // Expanded view for displaying list of answers
 		//required:false,     // To mark a question as being required to answer
-		currentAnswer:null,
-		answers:[
-			{
-				value:null,
-				title:null
-			}
-		]
+		answers:null
 	};
 	var ID_SEQUENCE = 0;
 
@@ -38,69 +32,83 @@ define([
 	 */
 	var QuestionView = function (options) {
 		this._options = Util.extend({}, DEFAULTS, options || {});
+		this._initialize();
+	};
 
-		this.el = options.el || document.createElement('section');
-		this.el.classList.add('question');
+	QuestionView.prototype._initialize = function () {
+		var options = this._options;
 
-		this._title = this.el.appendChild(document.createElement('question-title'));
+		this.el = options.el;
+		// Clear any place holder words within the containing element.
+		this.el.innerHTML = [
+			'<section class="question">',
+				'<header class="question-title"></header>',
+				'<div class="question-options"></div>',
+			'</section>'
+		].join('');
+
+		// The question being asked (question-title)
+		this._title = this.el.querySelector('.question-title');
 		this._title.innerHTML = options.title;
 
-		if (options.multiSelect) {
+		// The list of answers
+		this._answers = this.el.querySelector('.question-options');
+		this._answers.innerHTML = this.addAnswers();
 
-		}
-
-		if (options.allowOther) {
-
-		}
-
-		this._currentAnswer = this.el.appendChild(document.createElement('question-answer'));
-		this._currentAnswer.innerHTML = options.currentAnswer;
-
-		this._answers = [];
-		// add all provided answers when constructing
-		if (options.answers) {
-			for (var i=0, len=options.answers.length; i<len; i++) {
-				this.addAnswer(options.answer[i], true);
-			}
-		}
-		//this._answers = this.el.appendChild(document.createElement('question-options'));
-		//this._answers.innerHTML = options.answers;
+		this.getAnswers();
 	};
 
 	/**
-	 * Add an item to this list.
+	 * Add all answers to the list of answers.
 	 *
-	 * @param options {Object}
-	 *        item being added to list.
 	 */
-	QuestionView.prototype.addAnswer = function () {
-		// assign unique ids to this items elements
-		var id = ++ID_SEQUENCE;
-		var answerId = 'answer-list-' + id;
+	QuestionView.prototype.addAnswers = function () {
+		var options = this._options,
+		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
+		    answers = options.answers,
+		    addOther = options.allowOther,
+		    id = ++ID_SEQUENCE,
+		    questionId = 'question-' + id,
+		    answerId = 'answer-' + id,
+		    buf = [];
 
-		// summary element
-		var answerEl = document.createElement('span');
-		answerEl.id = answerId;
-		answerEl.className = 'answer-list';
-		answerEl.setAttribute('role', 'answer');
-		var answerContent = this.getAnswers();
-		if (typeof answerContent === 'string') {
-			answerEl.innerHTML = answerContent;
-		} else {
-			answerEl.appendChild(answerContent);
+		for (var i=0, len=answers.length; i<len; i++) {
+			buf.push([
+				'<input type="' + inputType + '" name="' + questionId +
+					'" id="' + answerId + '" value="' + answerId + '">' +
+				'<label for="' + answerId + '">' +
+					answers[i].title +
+				'</label>'
+			]);
+
+			id = ++ID_SEQUENCE;
+			answerId = 'answer-' + id;
 		}
 
-		// save reference to tab and elements
-		var answer = {
-			answerEl: answerEl
-		};
-		this._answers.push(answer);
+		if (addOther) {
+			buf.push([
+				'<input type="' + inputType + '" name="' + questionId +
+					'" id="' + answerId + '" value="' + answerId + '">' +
+				'<label for="' + answerId + '">' +
+					'Other' +
+				'</label>' +
+				'<input type="text" class="other" name="' + questionId + '">'
+			]);
+		}
+		return buf.join('');
+	};
 
-		// add elements to dom
-		this._nav.appendChild(answerEl);
+	/**
+	 * Return list of answers.
+	 *
+	 * @return {String|DOMElement}
+	 *         This implementation returns obj.title.
+	 */
+	QuestionView.prototype.getAnswers = function() {
+		var answers = this._options.answers;
 
-		// return reference to tab for selecting
-		return answer;
+		console.log(answers);
+		return answers;
 	};
 
 	return QuestionView;

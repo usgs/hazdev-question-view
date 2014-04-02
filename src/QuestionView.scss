@@ -17,10 +17,17 @@
 	.question-options {
 		//border:1px solid green;
 		label {
-			margin-right: 2em;
+			display:block;
 		}
 		input {
 
+		}
+		.other > input + input[type="text"] {
+			display:none;
+		}
+		.other > input:checked + input[type="text"] {
+			display:inline-block;
+			margin-left: 1em;
 		}
 	}
 
@@ -30,14 +37,3 @@
 
 }
 
-input.other + input[type=text] {
-		display:none;
-		border:5px solid black;
-		background-color: yellow;
-}
-
-input.other[checked] + input[type=text] {
-		display:block;
-		border:5px solid yellow;
-		background-color: black;
-}

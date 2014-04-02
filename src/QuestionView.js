@@ -1,7 +1,9 @@
 /* global define */
 define([
+	'mvc/View',
 	'util/Util'
 ], function (
+	View,
 	Util
 ) {
 	'use strict';
@@ -62,6 +64,9 @@ define([
 	/**
 	 * Add all answers to the list of answers.
 	 *
+	 * @return String
+	 *         Contains a list of answer options wrapped in appropriate HTML.
+	 *
 	 */
 	QuestionView.prototype._addAnswers = function () {
 		var options = this._options,
@@ -74,18 +79,22 @@ define([
 		    buf = [];
 
 		for (var i=0, len=answers.length; i<len; i++) {
-			buf.push([
-				'<label for="' + answerId + '">' +
-					'<input type="' + inputType + '" name="' + questionId +
-					'" id="' + answerId + '" value="' + answerId + '">' +
-					answers[i].title +
+			buf.push(
+				'<label for="', answerId, '" class="answer-', i, '">',
+					'<input',
+						' type="', inputType, '"',
+						' name="', questionId, '"',
+						' id="', answerId, '"',
+						' value="', answerId, '"',
+						'/>',
+					answers[i].title,
 				'</label>'
-			]);
+			);
 
 			// Keep track of answers with array of answer objects.
 			this._answerList.push({
-    		options: answers[i],
-    		input: this.el.querySelector('.answer-' + i + ' > input')
+				options: answers[i],
+				input: this.el.querySelector('.answer-' + i + ' > input')
 			});
 
 			id = ++ID_SEQUENCE;
@@ -93,19 +102,24 @@ define([
 		}
 
 		if (addOther) {
-			buf.push([
-				'<label for="' + answerId + '">' +
-					'<input type="' + inputType + '" name="' + questionId +
-					'" id="' + answerId + '" value="' + answerId + '">' +
-					'Other' +
-					'<input type="text" class="other" name="' + questionId + '">' +
+			buf.push(
+				'<label for="', answerId, '" class="other">',
+					'<input',
+						' type="', inputType, '"',
+						' name="', questionId, '"',
+						' id="', answerId, '"',
+						' value="', answerId, '"',
+						'/>',
+					'Other',
+					'<input type="text" name="', questionId, '">',
 				'</label>'
-			]);
+			);
 		}
 		return buf.join('');
 	};
 
 	/**
+	 * Sets input.checked on input elements.
 	 *
 	 */
 	QuestionView.prototype._setAnswer = function() {
@@ -116,7 +130,7 @@ define([
 	/**
 	 * Return list of answers.
 	 *
-	 * @return {String|DOMElement}
+	 * @return {String|Array}
 	 *         This implementation returns obj.title.
 	 */
 	QuestionView.prototype.getAnswers = function() {

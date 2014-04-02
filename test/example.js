@@ -21,6 +21,7 @@ require([
 		allowOther:false,
 		//expanded:false,
 		//required:false,
+		selectedAnswer:'second-answer',
 		answers:[
 			{
 				value:'first-answer',
@@ -86,6 +87,10 @@ require([
 		allowOther:true,
 		//expanded:false,
 		//required:false,
+		selectedAnswer:[
+			'second-answer',
+			'fourth-answer'
+		],
 		answers:[
 			{
 				value:'first-answer',

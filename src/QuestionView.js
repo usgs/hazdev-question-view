@@ -114,7 +114,7 @@ define([
 		this._answers.innerHTML = buf.join('');
 
 		// Keep track of answers with array of answer objects.
-		for (var i=0, len=answers.length; i<len; i++) {
+		for (i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
 			this._answerList.push({
 				options: answer,
@@ -135,20 +135,22 @@ define([
 	 */
 	QuestionView.prototype._setAnswer = function() {
 
-	}
+	};
 
 
 	/**
 	 * Return list of answers.
 	 *
-	 * @return {String|Array}
-	 *         This implementation returns obj.title.
+	 * @return {Object|Array}
+	 *         Null if no answers are selected
+	 *         An object containing a single answer if only 1 is selected
+	 *         An array of answer objects if there is more than 1
 	 */
 	QuestionView.prototype.getAnswers = function() {
-		var answer,
-		    currentAnswer = [],
-		    options = this._options,
+		var options = this._options,
 		    addOther = options.allowOther,
+		    answer,
+		    currentAnswer = [],
 		    answerList = this._answerList;
 
 		for (var i=0, len=answerList.length; i<len; i++) {
@@ -173,7 +175,7 @@ define([
 
 		if (currentAnswer.length === 0) {
 			return null;
-		} else if (multiSelect) {
+		} else if (options.multiSelect) {
 			return currentAnswer;
 		} else {
 			return currentAnswer[0];

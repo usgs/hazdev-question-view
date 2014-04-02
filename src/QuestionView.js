@@ -32,6 +32,7 @@ define([
 	 */
 	var QuestionView = function (options) {
 		this._options = Util.extend({}, DEFAULTS, options || {});
+		this._answerList = [];
 		this._initialize();
 	};
 
@@ -53,7 +54,7 @@ define([
 
 		// The list of answers
 		this._answers = this.el.querySelector('.question-options');
-		this._answers.innerHTML = this.addAnswers();
+		this._answers.innerHTML = this._addAnswers();
 
 		this.getAnswers();
 	};
@@ -62,7 +63,7 @@ define([
 	 * Add all answers to the list of answers.
 	 *
 	 */
-	QuestionView.prototype.addAnswers = function () {
+	QuestionView.prototype._addAnswers = function () {
 		var options = this._options,
 		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
 		    answers = options.answers,
@@ -74,12 +75,18 @@ define([
 
 		for (var i=0, len=answers.length; i<len; i++) {
 			buf.push([
-				'<input type="' + inputType + '" name="' + questionId +
-					'" id="' + answerId + '" value="' + answerId + '">' +
 				'<label for="' + answerId + '">' +
+					'<input type="' + inputType + '" name="' + questionId +
+					'" id="' + answerId + '" value="' + answerId + '">' +
 					answers[i].title +
 				'</label>'
 			]);
+
+			// Keep track of answers with array of answer objects.
+			this._answerList.push({
+    		options: answers[i],
+    		input: this.el.querySelector('.answer-' + i + ' > input')
+			});
 
 			id = ++ID_SEQUENCE;
 			answerId = 'answer-' + id;
@@ -87,16 +94,24 @@ define([
 
 		if (addOther) {
 			buf.push([
-				'<input type="' + inputType + '" name="' + questionId +
-					'" id="' + answerId + '" value="' + answerId + '">' +
 				'<label for="' + answerId + '">' +
+					'<input type="' + inputType + '" name="' + questionId +
+					'" id="' + answerId + '" value="' + answerId + '">' +
 					'Other' +
-				'</label>' +
-				'<input type="text" class="other" name="' + questionId + '">'
+					'<input type="text" class="other" name="' + questionId + '">' +
+				'</label>'
 			]);
 		}
 		return buf.join('');
 	};
+
+	/**
+	 *
+	 */
+	QuestionView.prototype._setAnswer = function() {
+
+	}
+
 
 	/**
 	 * Return list of answers.
@@ -105,9 +120,14 @@ define([
 	 *         This implementation returns obj.title.
 	 */
 	QuestionView.prototype.getAnswers = function() {
-		var answers = this._options.answers;
+		var answers = this._options.answers,
+				answerList = this._answerList;
 
-		console.log(answers);
+		for (var i=0, len=answerList.length; i<len; i++) {
+			console.log('options '+answerList[i].options.title);
+			console.log('input '+answerList[i].input);
+		}
+
 		return answers;
 	};
 

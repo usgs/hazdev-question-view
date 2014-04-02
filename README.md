@@ -11,7 +11,7 @@ Getting Started
 [Install needed dependencies and run them](readme_dependency_install.md)
 
 To test the application locally, run grunt and browse to:
-  http://localhost:8000/QuestionViewTest.html
+  http://localhost:8000/example.html
 
 ### License ###
 

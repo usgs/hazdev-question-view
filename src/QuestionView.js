@@ -56,7 +56,7 @@ define([
 
 		// The list of answers
 		this._answers = this.el.querySelector('.question-options');
-		this._answers.innerHTML = this._addAnswers();
+		this._addAnswers();
 
 		this.getAnswers();
 	};
@@ -72,50 +72,61 @@ define([
 		var options = this._options,
 		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
 		    answers = options.answers,
+		    answer,
 		    addOther = options.allowOther,
-		    id = ++ID_SEQUENCE,
-		    questionId = 'question-' + id,
-		    answerId = 'answer-' + id,
+		    questionId = 'question-' + ++ID_SEQUENCE,
+		    answerId,
 		    buf = [];
 
 		for (var i=0, len=answers.length; i<len; i++) {
+			answer = answers[i];
+			answerId = 'answer-' + ++ID_SEQUENCE;
+
 			buf.push(
 				'<label for="', answerId, '" class="answer-', i, '">',
 					'<input',
 						' type="', inputType, '"',
 						' name="', questionId, '"',
 						' id="', answerId, '"',
-						' value="', answerId, '"',
+						' value="', answer.value, '"',
 						'/>',
-					answers[i].title,
+					answer.title,
 				'</label>'
 			);
-
-			// Keep track of answers with array of answer objects.
-			this._answerList.push({
-				options: answers[i],
-				input: this.el.querySelector('.answer-' + i + ' > input')
-			});
-
-			id = ++ID_SEQUENCE;
-			answerId = 'answer-' + id;
 		}
 
 		if (addOther) {
+			answerId = 'answer-' + ++ID_SEQUENCE;
 			buf.push(
 				'<label for="', answerId, '" class="other">',
 					'<input',
 						' type="', inputType, '"',
 						' name="', questionId, '"',
 						' id="', answerId, '"',
-						' value="', answerId, '"',
+						' value="other"',
 						'/>',
 					'Other',
-					'<input type="text" name="', questionId, '">',
+					'<input type="text"/>',
 				'</label>'
 			);
 		}
-		return buf.join('');
+
+		this._answers.innerHTML = buf.join('');
+
+		// Keep track of answers with array of answer objects.
+		for (var i=0, len=answers.length; i<len; i++) {
+			answer = answers[i];
+			this._answerList.push({
+				options: answer,
+				input: this._answers.querySelector('.answer-' + i + ' > input')
+			});
+		}
+		if (addOther){
+			this._other = {
+				input: this._answers.querySelector('.other > input'),
+				value: this._answers.querySelector('.other > input[type="text"]')
+			};
+		}
 	};
 
 	/**
@@ -134,15 +145,39 @@ define([
 	 *         This implementation returns obj.title.
 	 */
 	QuestionView.prototype.getAnswers = function() {
-		var answers = this._options.answers,
-				answerList = this._answerList;
+		var answer,
+		    currentAnswer = [],
+		    options = this._options,
+		    addOther = options.allowOther,
+		    answerList = this._answerList;
 
 		for (var i=0, len=answerList.length; i<len; i++) {
-			console.log('options '+answerList[i].options.title);
-			console.log('input '+answerList[i].input);
+			answer = answerList[i];
+			if (answer.input.checked) {
+				currentAnswer.push(
+					answer.options
+				);
+			}
 		}
 
-		return answers;
+		if (addOther) {
+			if (this._other.input.checked) {
+				currentAnswer.push(
+					{
+						value: 'other',
+						title: this._other.value.value
+					}
+				);
+			}
+		}
+
+		if (currentAnswer.length === 0) {
+			return null;
+		} else if (multiSelect) {
+			return currentAnswer;
+		} else {
+			return currentAnswer[0];
+		}
 	};
 
 	return QuestionView;

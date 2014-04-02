@@ -23,15 +23,15 @@ require([
 		//required:false,
 		answers:[
 			{
-				value:'answer1',
+				value:'first-answer',
 				title:'Answer 1'
 			},
 			{
-				value:'answer2',
+				value:'second-answer',
 				title:'Answer 2'
 			},
 			{
-				value:'answer3',
+				value:'third-answer',
 				title:'Answer 3'
 			}
 		]
@@ -46,15 +46,15 @@ require([
 		//required:false,
 		answers:[
 			{
-				value:'answer1',
+				value:'first-answer',
 				title:'My answer'
 			},
 			{
-				value:'answer2',
+				value:'second-answer',
 				title:'Your answer'
 			},
 			{
-				value:'answer3',
+				value:'third-answer',
 				title:'Their answer'
 			}
 		]
@@ -69,11 +69,11 @@ require([
 		//required:false,
 		answers:[
 			{
-				value:'answer1',
+				value:'first-answer',
 				title:'Some answer'
 			},
 			{
-				value:'answer2',
+				value:'second-answer',
 				title:'Another answer'
 			}
 		]
@@ -82,29 +82,29 @@ require([
 	new QuestionView({
 		el: document.querySelector('.question4'),
 		title:'These ones are in a div',
-		multiSelect:false,
+		multiSelect:true,
 		allowOther:true,
 		//expanded:false,
 		//required:false,
 		answers:[
 			{
-				value:'answer1',
+				value:'first-answer',
 				title:'#1'
 			},
 			{
-				value:'answer2',
+				value:'second-answer',
 				title:'#2'
 			},
 			{
-				value:'answer3',
+				value:'third-answer',
 				title:'#3'
 			},
 			{
-				value:'answer4',
+				value:'fourth-answer',
 				title:'#4'
 			},
 			{
-				value:'answer5',
+				value:'fifth-answer',
 				title:'#5'
 			}
 		]

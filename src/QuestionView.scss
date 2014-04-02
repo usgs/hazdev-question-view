@@ -1,13 +1,8 @@
 .question {
-	//border: 1px solid red;
 	margin: 1px;
 	padding: 5px;
-	.other {
-		//display:none;
-	}
 
 	.question-title {
-		//border: 1px solid orange;
 		font-weight:bold;
 		font-family:sans-serif;
 		font-size:larger;
@@ -15,19 +10,17 @@
 	}
 
 	.question-options {
-		//border:1px solid green;
 		label {
 			display:block;
 		}
 		input {
-
+			margin-left: 1em;
 		}
 		.other > input + input[type="text"] {
 			display:none;
 		}
 		.other > input:checked + input[type="text"] {
 			display:inline-block;
-			margin-left: 1em;
 		}
 	}
 

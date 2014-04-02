@@ -10,11 +10,12 @@ define([
 
 	var DEFAULTS = {
 		el:document.createElement('section'),
-		title:null,         // The question being asked
-		multiSelect:false,  // For radio buttons or checkboxes, radio is default
-		allowOther:false,   // To create a text field when other is selected
-		//expanded:false,     // Expanded view for displaying list of answers
-		//required:false,     // To mark a question as being required to answer
+		title:null,          // The question being asked
+		multiSelect:false,   // For radio buttons or checkboxes, radio is default
+		allowOther:false,    // To create a text field when other is selected
+		//expanded:false,      // Expanded view for displaying list of answers
+		//required:false,      // To mark a question as being required to answer
+		selectedAnswer:null, // Any answers that should be selected by default
 		answers:null
 	};
 	var ID_SEQUENCE = 0;
@@ -57,6 +58,7 @@ define([
 		// The list of answers
 		this._answers = this.el.querySelector('.question-options');
 		this._addAnswers();
+		this._setAnswer();
 
 		this.getAnswers();
 	};
@@ -131,9 +133,37 @@ define([
 
 	/**
 	 * Sets input.checked on input elements.
+	 * Assumes a string for the value of a single answer if multiSelect:false
+	 * Assumes an array of answer values if multiSelect:true
 	 *
 	 */
 	QuestionView.prototype._setAnswer = function() {
+		var options = this._options,
+		    selectedAnswer,
+		    answerList = this._answerList,
+		    multiSelect = options.multiSelect;
+
+ 		if (options.selectedAnswer !== null) {
+ 			selectedAnswer = options.selectedAnswer;
+ 		} else {
+ 			return;
+ 		}
+
+		if (selectedAnswer !== null) {
+			for (var i=0, len=answerList.length; i<len; i++) {
+				if (multiSelect) { // Check boxes
+					for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
+						if (selectedAnswer[j] == answerList[i].options.value) {
+							answerList[i].input.checked="checked";
+						}
+					}
+				} else {           // Radio buttons
+					if (selectedAnswer == answerList[i].options.value) {
+						answerList[i].input.checked="checked";
+					}
+				}
+			}
+		}
 
 	};
 

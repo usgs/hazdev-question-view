@@ -113,38 +113,24 @@ define([
 			}
 		}
 
-		/*if (addOther) {
-			answerId = 'answer-' + ++ID_SEQUENCE;
-			buf.push(
-				'<label for="', answerId, '" class="other">',
-					'<input',
-						' type="', inputType, '"',
-						' name="', questionId, '"',
-						' id="', answerId, '"',
-						' value="other"',
-						'/>',
-					'Other',
-					'<input type="text"/>',
-				'</label>'
-			);
-		}*/
-
 		this._answers.innerHTML = buf.join('');
 
 		// Keep track of answers with array of answer objects.
 		for (i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
-			this._answerList.push({
-				options: answer,
-				input: this._answers.querySelector('.answer-' + i + ' > input')
-			});
+			if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
+				this._answerList.push({
+					options: answer,
+					input: this._answers.querySelector('.answer-' + i + ' > input'),
+					otherInput: this._answers.querySelector('.other > input[type="text"]')
+				});
+			} else {
+				this._answerList.push({
+					options: answer,
+					input: this._answers.querySelector('.answer-' + i + ' > input')
+				});
+			}
 		}
-		/*if (addOther){
-			this._other = {
-				input: this._answers.querySelector('.other > input'),
-				value: this._answers.querySelector('.other > input[type="text"]')
-			};
-		}*/
 	};
 
 

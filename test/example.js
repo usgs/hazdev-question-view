@@ -14,11 +14,10 @@ require([
 ) {
 	'use strict';
 
-/* /////////////////////////////////////////
-   //                                     //
-   // Example of all values with comments //
-   //                                     //
-   /////////////////////////////////////////
+/*
+   // ----------------------------------------------------------------------
+   // Example of all values with comments
+   // ----------------------------------------------------------------------
 	new QuestionView({
 		el: document.querySelector('.question1'), // Match the class in your html
 		label:'This is a question?',              // Ask your question

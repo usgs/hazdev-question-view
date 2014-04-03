@@ -133,6 +133,54 @@ define([
 	};
 
 
+	// ----------------------------------------------------------------------
+	// Public Methods
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Return list of answers.
+	 *
+	 * @return {Object|Array}
+	 *         Null if no answers are selected
+	 *         An object containing a single answer if only 1 is selected
+	 *         An array of answer objects if there is more than 1
+	 */
+	QuestionView.prototype.getAnswer = function() {
+		var options = this._options,
+		    addOther = options.allowOther,
+		    answer,
+		    currentAnswer = [],
+		    answerList = this._answerList;
+
+		for (var i=0, len=answerList.length; i<len; i++) {
+			answer = answerList[i];
+			if (answer.input.checked) {
+				currentAnswer.push(
+					answer.options
+				);
+			}
+		}
+
+		if (addOther) {
+			if (this._other.input.checked) {
+				currentAnswer.push(
+					{
+						value: 'other',
+						label: this._other.value.value
+					}
+				);
+			}
+		}
+
+		if (currentAnswer.length === 0) {
+			return null;
+		} else if (options.multiSelect) {
+			return currentAnswer;
+		} else {
+			return currentAnswer[0];
+		}
+	};
+
 	/**
 	 * Sets input.checked on input elements.
 	 * Assumes a string for the value of a single answer if multiSelect:false
@@ -168,48 +216,18 @@ define([
 	};
 
 	/**
-	 * Return list of answers.
 	 *
-	 * @return {Object|Array}
-	 *         Null if no answers are selected
-	 *         An object containing a single answer if only 1 is selected
-	 *         An array of answer objects if there is more than 1
 	 */
-	QuestionView.prototype.getAnswers = function() {
-		var options = this._options,
-		    addOther = options.allowOther,
-		    answer,
-		    currentAnswer = [],
-		    answerList = this._answerList;
+	QuestionView.prototype.getOtherAnswer = function() {
 
-		for (var i=0, len=answerList.length; i<len; i++) {
-			answer = answerList[i];
-			if (answer.input.checked) {
-				currentAnswer.push(
-					answer.options
-				);
-			}
-		}
+	}
 
-		if (addOther) {
-			if (this._other.input.checked) {
-				currentAnswer.push(
-					{
-						value: 'other',
-						label: this._other.value.value
-					}
-				);
-			}
-		}
+	/**
+	 *
+	 */
+	QuestionView.prototype.setAnswer = function(selectedAnswer) {
 
-		if (currentAnswer.length === 0) {
-			return null;
-		} else if (options.multiSelect) {
-			return currentAnswer;
-		} else {
-			return currentAnswer[0];
-		}
-	};
+	}
 
 	return QuestionView;
 });

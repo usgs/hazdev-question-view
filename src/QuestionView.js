@@ -40,7 +40,8 @@ define([
 	};
 
 	QuestionView.prototype._initialize = function () {
-		var options = this._options;
+		var options = this._options,
+		    textBox;
 
 		this.el = options.el;
 		// Clear any place holder words within the containing element.
@@ -60,7 +61,7 @@ define([
 		this._addAnswers();
 		this._setAnswer();
 
-		this.getAnswers();
+		this.getAnswers();  // TODO remove this when done testing
 	};
 
 	/**

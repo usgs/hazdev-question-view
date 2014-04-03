@@ -17,10 +17,10 @@
 			margin-left: 1em;
 		}
 		.other > input + input[type="text"] {
-			display:none;
+			display:inline-block;
 		}
 		.other > input:checked + input[type="text"] {
-			display:inline-block;
+			//display:inline-block;
 		}
 	}
 

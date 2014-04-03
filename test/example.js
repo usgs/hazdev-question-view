@@ -14,13 +14,18 @@ require([
 ) {
 	'use strict';
 
+/* /////////////////////////////////////////
+   //                                     //
+   // Example of all values with comments //
+   //                                     //
+   /////////////////////////////////////////
 	new QuestionView({
 		el: document.querySelector('.question1'), // Match the class in your html
 		label:'This is a question?',              // Ask your question
-		multiSelect:false,                 // Allow multiple answers or only one?
+		multiSelect:false,               // Allow multiple answers or only one?
 		allowOther:false,
-		//expanded:false,
-		//required:false,
+		//expanded:false,                // Not yet implemented
+		//required:false,                // Not yet implemented
 		selectedAnswer:'second-answer',  // Use a string for single default answer
 		//selectedAnswer:[               // Use an array to select multiple defaults
 		//	'second-answer',
@@ -28,19 +33,20 @@ require([
 		//],
 		answers:[                        // Array of answer options objects
 			{
-				value:'first-answer',
-				label:'Answer 1'
+				value:'first-answer',        // 'Value' for the input element
+				label:'Answer 1'             // The human-friendly answer to show
 			},
 			{
 				value:'second-answer',
 				label:'Answer 2'
 			},
-			{
+			{      // As many answers as you need for your question, each in an object
 				value:'third-answer',
 				label:'Answer 3'
 			}
 		]
 	});
+*/
 
 	new QuestionView({
 		el: document.querySelector('.question1'),

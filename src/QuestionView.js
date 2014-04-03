@@ -11,8 +11,6 @@ define([
 	var DEFAULTS = {
 		label:null,          // The question being asked
 		multiSelect:false,   // For radio buttons or checkboxes, radio is default
-		//expanded:false,      // Expanded view for displaying list of answers
-		//required:false,      // To mark a question as being required to answer
 		selectedAnswer:null, // Any answers that should be selected by default
 		answers:null  // Array of answers, each with attributes:
 		              // value - The "value" for the input
@@ -120,17 +118,15 @@ define([
 		// Keep track of answers with array of answer objects.
 		for (i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
-			//if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
-			//if (typeof answer.otherLabel === 'string') {
 			answerList.push({
 				option: answer,
 				input: this._answers.querySelector('.answer-' + i + ' > input'),
-				otherInput: this._answers.querySelector('.answer-' + i + '-other > input')
+				otherInput: this._answers.querySelector(
+						'.answer-' + i + '-other > input')
 			});
 		}
 
 		// Bind and add event listeners to all inputs
-		//this._onClick = this._onClick.bind(this);
 		this._onChange = this._onChange.bind(this);
 		this._onBlur = this._onBlur.bind(this);
 
@@ -158,7 +154,7 @@ define([
 				}
 			}
 		}
-		this.trigger('change');
+		this.trigger('change', this);
 	};
 
 	QuestionView.prototype._onBlur = function (ev) {
@@ -171,7 +167,7 @@ define([
 			if (answerList[i].otherInput === target) {
 				if (answerList[i].option.otherValue !== target.value) {
 					answerList[i].option.otherValue = target.value;
-					this.trigger('change');
+					this.trigger('change', this);
 				}
 				break;
 			}

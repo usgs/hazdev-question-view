@@ -22,7 +22,6 @@ require([
 		el: document.querySelector('.question1'), // Match the class in your html
 		label:'This is a question?',              // Ask your question
 		multiSelect:false,               // Allow multiple answers or only one?
-		allowOther:false,
 		//expanded:false,                // Not yet implemented
 		//required:false,                // Not yet implemented
 		selectedAnswer:'second-answer',  // Use a string for single default answer
@@ -53,7 +52,6 @@ require([
 		el: document.querySelector('.question1'),
 		label:'This is a question?',
 		multiSelect:false,
-		allowOther:false,
 		//expanded:false,
 		//required:false,
 		selectedAnswer:'second-answer',
@@ -77,7 +75,6 @@ require([
 		el: document.querySelector('.question2'),
 		label:'This IS a question!',
 		multiSelect:true,
-		allowOther:false,
 		//expanded:false,
 		//required:false,
 		answers:[
@@ -100,7 +97,6 @@ require([
 		el: document.querySelector('.question3'),
 		label:'This one uses an "other" box',
 		multiSelect:false,
-		allowOther:true,
 		//expanded:false,
 		//required:false,
 		answers:[
@@ -119,7 +115,6 @@ require([
 		el: document.querySelector('.question4'),
 		label:'These ones are in a div',
 		multiSelect:true,
-		allowOther:true,
 		//expanded:false,
 		//required:false,
 		selectedAnswer:[
@@ -154,7 +149,6 @@ require([
 		el: document.querySelector('.question5'),
 		label:'One last question',
 		multiSelect:true,
-		allowOther:false,
 		//expanded:false,
 		//required:false,
 		answers:[

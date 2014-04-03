@@ -59,7 +59,7 @@ define([
 		// The list of answers
 		this._answers = this.el.querySelector('.question-options');
 		this._addAnswers();
-		this._setAnswer();
+		this.setAnswer(options.selectedAnswer);
 
 		this.getAnswers();  // TODO remove this when done testing
 	};
@@ -132,23 +132,17 @@ define([
 		}
 	};
 
+
 	/**
 	 * Sets input.checked on input elements.
 	 * Assumes a string for the value of a single answer if multiSelect:false
 	 * Assumes an array of answer values if multiSelect:true
 	 *
 	 */
-	QuestionView.prototype._setAnswer = function() {
+	QuestionView.prototype.setAnswer = function(selectedAnswer) {
 		var options = this._options,
-		    selectedAnswer,
 		    answerList = this._answerList,
 		    multiSelect = options.multiSelect;
-
- 		if (options.selectedAnswer !== null) {
- 			selectedAnswer = options.selectedAnswer;
- 		} else {
- 			return;
- 		}
 
 		if (selectedAnswer !== null) {
 			for (var i=0, len=answerList.length; i<len; i++) {
@@ -165,9 +159,7 @@ define([
 				}
 			}
 		}
-
 	};
-
 
 	/**
 	 * Return list of answers.

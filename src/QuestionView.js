@@ -148,7 +148,7 @@ define([
 	 */
 	QuestionView.prototype.getAnswer = function() {
 		var options = this._options,
-		    addOther = options.allowOther,
+		    //addOther = options.allowOther,
 		    answer,
 		    currentAnswer = [],
 		    answerList = this._answerList;
@@ -162,7 +162,7 @@ define([
 			}
 		}
 
-		if (addOther) {
+		/*if (addOther) {
 			if (this._other.input.checked) {
 				currentAnswer.push(
 					{
@@ -171,7 +171,7 @@ define([
 					}
 				);
 			}
-		}
+		}*/
 
 		if (currentAnswer.length === 0) {
 			return null;

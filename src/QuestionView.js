@@ -9,7 +9,6 @@ define([
 	'use strict';
 
 	var DEFAULTS = {
-		el:document.createElement('section'),
 		label:null,          // The question being asked
 		multiSelect:false,   // For radio buttons or checkboxes, radio is default
 		//expanded:false,      // Expanded view for displaying list of answers
@@ -39,8 +38,11 @@ define([
 	var QuestionView = function (options) {
 		this._options = Util.extend({}, DEFAULTS, options || {});
 		this._answerList = [];
-		this._initialize();
+
+		View.call(this, this._options);
 	};
+
+	QuestionView.prototype = Object.create(View.prototype);
 
 	QuestionView.prototype._initialize = function () {
 		var options = this._options;
@@ -98,7 +100,7 @@ define([
 					answer.label,
 				'</label>'
 			);
-			if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
+			if (typeof answer.otherLabel === 'string') {
 				buf.push(
 					'<label for="', answerId, '" class="answer-', i, '-other other">',
 					answer.otherLabel,
@@ -118,35 +120,63 @@ define([
 		// Keep track of answers with array of answer objects.
 		for (i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
-			if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
-				answerList.push({
-					option: answer,
-					input: this._answers.querySelector('.answer-' + i + ' > input'),
-					otherInput: this._answers.querySelector('.other > input[type="text"]')
-				});
-			} else {
-				answerList.push({
-					option: answer,
-					input: this._answers.querySelector('.answer-' + i + ' > input')
-				});
-			}
+			//if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
+			//if (typeof answer.otherLabel === 'string') {
+			answerList.push({
+				option: answer,
+				input: this._answers.querySelector('.answer-' + i + ' > input'),
+				otherInput: this._answers.querySelector('.answer-' + i + '-other > input')
+			});
 		}
 
 		// Bind and add event listeners to all inputs
-		this._onClick = this._onClick.bind(this);
+		//this._onClick = this._onClick.bind(this);
+		this._onChange = this._onChange.bind(this);
+		this._onBlur = this._onBlur.bind(this);
 
 		for (i=0, len=answerList.length; i<len; i++) {
 			answerList[i].input.addEventListener('change', this._onChange);
-			if (answerList[i].otherLabel !== undefined &&
-				  answerList[i].otherLabel !== null) {
+			if (answerList[i].otherInput !== null) {
 				answerList[i].otherInput.addEventListener('blur', this._onBlur);
 			}
 		}
 	};
 
-	QuestionView.prototype._onClick = function () {
+	QuestionView.prototype._onChange = function (ev) {
+		var target = ev.target,
+		    answerList = this._answerList,
+		    i,
+		    len,
+		    checked;
 
-	}
+		for (i=0, len=answerList.length; i<len; i++) {
+			if (answerList[i].otherInput !== null) {
+				checked = answerList[i].input.checked;
+				answerList[i].otherInput.disabled = !checked;
+				if (answerList[i].input === target && checked) {
+					answerList[i].otherInput.focus();
+				}
+			}
+		}
+		this.trigger('change');
+	};
+
+	QuestionView.prototype._onBlur = function (ev) {
+		var target = ev.target,
+		    answerList = this._answerList,
+		    i,
+		    len;
+
+		for (i=0, len=answerList.length; i<len; i++) {
+			if (answerList[i].otherInput === target) {
+				if (answerList[i].option.otherValue !== target.value) {
+					answerList[i].option.otherValue = target.value;
+					this.trigger('change');
+				}
+				break;
+			}
+		}
+	};
 
 
 	// ----------------------------------------------------------------------
@@ -194,27 +224,35 @@ define([
 	QuestionView.prototype.setAnswer = function(selectedAnswer) {
 		var options = this._options,
 		    answerList = this._answerList,
-		    multiSelect = options.multiSelect;
+		    multiSelect = options.multiSelect,
+		    checked;
 
-		if (selectedAnswer !== null) {
-			var len=answerList.length;
-			// Make sure everything is unchecked first
-			for (var k=0; k<len; k++) {
-				answerList[k].input.checked=false;
-			}
+		var len=answerList.length;
+		// Make sure everything is unchecked first
+		for (var k=0; k<len; k++) {
+			answerList[k].input.checked=false;
+		}
 
-			for (var i=0; i<len; i++) {
-				if (multiSelect) { // Check boxes
+		for (var i=0; i<len; i++) {
+			var answer = answerList[i];
+
+			if (multiSelect) { // Check boxes
+				checked = false
+				if (selectedAnswer !== null) {
 					for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
-						if (selectedAnswer[j] == answerList[i].option.value) {
-							answerList[i].input.checked="checked";
+						if (selectedAnswer[j] === answer.option.value){
+							checked = true;
+							break;
 						}
 					}
-				} else {           // Radio buttons
-					if (selectedAnswer == answerList[i].option.value) {
-						answerList[i].input.checked="checked";
-					}
 				}
+			} else {           // Radio buttons
+				checked = (selectedAnswer === answer.option.value);
+			}
+
+			answer.input.checked=checked;
+			if (answer.otherInput !== null) {
+				answer.otherInput.disabled = !checked;
 			}
 		}
 	};

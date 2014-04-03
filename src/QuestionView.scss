@@ -19,11 +19,9 @@
 		.other {
 			margin-left: 1.8em;
 		}
-		.other > input + input[type="text"] {
-			//display:inline-block;
-		}
-		.other > input:checked + input[type="text"] {
-			//display:inline-block;
+		input:disabled {
+			color:#999;
+			background-color:#DDD;
 		}
 	}
 

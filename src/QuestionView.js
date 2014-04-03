@@ -145,7 +145,13 @@ define([
 		    multiSelect = options.multiSelect;
 
 		if (selectedAnswer !== null) {
-			for (var i=0, len=answerList.length; i<len; i++) {
+			var len=answerList.length;
+			// Make sure everything is not checked first
+			for (var k=0; k<len; k++) {
+				answerList[k].input.checked=false;
+			}
+
+			for (var i=0; i<len; i++) {
 				if (multiSelect) { // Check boxes
 					for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
 						if (selectedAnswer[j] == answerList[i].options.value) {

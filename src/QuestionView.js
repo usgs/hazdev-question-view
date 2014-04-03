@@ -61,7 +61,7 @@ define([
 		this._addAnswers();
 		this.setAnswer(options.selectedAnswer);
 
-		this.getAnswers();  // TODO remove this when done testing
+		this.getAnswer();  // TODO remove this when done testing
 	};
 
 	/**

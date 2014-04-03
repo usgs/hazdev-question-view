@@ -34,6 +34,8 @@ require([
 			{
 				value:'first-answer',        // 'Value' for the input element
 				label:'Answer 1'             // The human-friendly answer to show
+				//otherValue:'how-high',     // Extra value when this answer is selected
+				//otherLabel:'How high?'     // Human-friendly label for the extra info
 			},
 			{
 				value:'second-answer',
@@ -158,27 +160,39 @@ require([
 		answers:[
 			{
 				value:'answer-high',
-				label:'High'
+				label:'High',
+				otherValue:'how-high',
+				otherLabel:'How high?'
 			},
 			{
 				value:'answer-low',
-				label:'Low'
+				label:'Low',
+				otherValue:'how-low',
+				otherLabel:'How low?'
 			},
 			{
 				value:'answer-up',
-				label:'Up'
+				label:'Up',
+				otherValue:'up-confirm',
+				otherLabel:'Realy?'
 			},
 			{
 				value:'answer-down',
-				label:'Down'
+				label:'Down',
+				otherValue:'down-confirm',
+				otherLabel:'Are you sure?'
 			},
 			{
 				value:'answer-left',
-				label:'Left'
+				label:'Left',
+				otherValue:'left',
+				otherLabel:'My left or yours?'
 			},
 			{
 				value:'answer-right',
-				label:'Right'
+				label:'Right',
+				otherValue:'right',
+				otherLabel:'Yesterday?'
 			}
 		]
 	});

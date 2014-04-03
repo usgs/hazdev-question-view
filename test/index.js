@@ -3,6 +3,7 @@ require.config({
 	paths: {
 		mocha: 'mocha/mocha',
 		chai: 'chai/chai',
+		sinon: 'sinon/pkg/sinon',
 		'mvc': '/hazdev-webutils/src/mvc',
     'util': '/hazdev-webutils/src/util'
 	},
@@ -13,6 +14,9 @@ require.config({
 		chai: {
 			deps: ['mocha'],
 			exports: 'chai'
+		},
+		sinon: {
+			exports: 'sinon'
 		}
 	}
 });
@@ -28,6 +32,7 @@ require([
 
 	// Add each test class here as they are implemented
 	require([
+		'spec/QuestionViewTest'
 	], function () {
 		if (window.mochaPhantomJS) {
 			window.mochaPhantomJS.run();

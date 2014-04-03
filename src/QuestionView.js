@@ -130,8 +130,16 @@ define([
 				});
 			}
 		}
+
+		this._onClick = this._onClick.bind(this);
+		for (i=0, len=this._answerList.length; i<len; i++) {
+			//this._answerList[i].addEventListener('change', this._onChange);
+		}
 	};
 
+	QuestionView.prototype._onClick = function () {
+
+	}
 
 	// ----------------------------------------------------------------------
 	// Public Methods

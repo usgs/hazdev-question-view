@@ -26,8 +26,8 @@ require([
 		//required:false,                // Not yet implemented
 		selectedAnswer:'second-answer',  // Use a string for single default answer
 		//selectedAnswer:[               // Use an array to select multiple defaults
-		//	'second-answer',
-		//	'fourth-answer'
+		//	'second-answer', // These strings need to match one of the answer:values
+		//	'third-answer'
 		//],
 		answers:[                        // Array of answer options objects
 			{

@@ -78,6 +78,7 @@ define([
 		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
 		    answers = options.answers,
 		    answer,
+		    answerList = this._answerList,
 		    questionId = 'question-' + ++ID_SEQUENCE,
 		    answerId,
 		    buf = [];
@@ -118,28 +119,35 @@ define([
 		for (i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
 			if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
-				this._answerList.push({
+				answerList.push({
 					option: answer,
 					input: this._answers.querySelector('.answer-' + i + ' > input'),
 					otherInput: this._answers.querySelector('.other > input[type="text"]')
 				});
 			} else {
-				this._answerList.push({
+				answerList.push({
 					option: answer,
 					input: this._answers.querySelector('.answer-' + i + ' > input')
 				});
 			}
 		}
 
+		// Bind and add event listeners to all inputs
 		this._onClick = this._onClick.bind(this);
-		for (i=0, len=this._answerList.length; i<len; i++) {
-			//this._answerList[i].addEventListener('change', this._onChange);
+
+		for (i=0, len=answerList.length; i<len; i++) {
+			answerList[i].input.addEventListener('change', this._onChange);
+			if (answerList[i].otherLabel !== undefined &&
+				  answerList[i].otherLabel !== null) {
+				answerList[i].otherInput.addEventListener('blur', this._onBlur);
+			}
 		}
 	};
 
 	QuestionView.prototype._onClick = function () {
 
 	}
+
 
 	// ----------------------------------------------------------------------
 	// Public Methods

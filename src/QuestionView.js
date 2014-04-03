@@ -10,7 +10,7 @@ define([
 
 	var DEFAULTS = {
 		el:document.createElement('section'),
-		title:null,          // The question being asked
+		label:null,          // The question being asked
 		multiSelect:false,   // For radio buttons or checkboxes, radio is default
 		allowOther:false,    // To create a text field when other is selected
 		//expanded:false,      // Expanded view for displaying list of answers
@@ -46,14 +46,14 @@ define([
 		// Clear any place holder words within the containing element.
 		this.el.innerHTML = [
 			'<section class="question">',
-				'<header class="question-title"></header>',
+				'<header class="question-label"></header>',
 				'<div class="question-options"></div>',
 			'</section>'
 		].join('');
 
-		// The question being asked (question-title)
-		this._title = this.el.querySelector('.question-title');
-		this._title.innerHTML = options.title;
+		// The question being asked (question-label)
+		this._label = this.el.querySelector('.question-label');
+		this._label.innerHTML = options.label;
 
 		// The list of answers
 		this._answers = this.el.querySelector('.question-options');
@@ -92,7 +92,7 @@ define([
 						' id="', answerId, '"',
 						' value="', answer.value, '"',
 						'/>',
-					answer.title,
+					answer.label,
 				'</label>'
 			);
 		}
@@ -197,7 +197,7 @@ define([
 				currentAnswer.push(
 					{
 						value: 'other',
-						title: this._other.value.value
+						label: this._other.value.value
 					}
 				);
 			}

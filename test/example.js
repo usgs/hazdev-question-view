@@ -15,8 +15,36 @@ require([
 	'use strict';
 
 	new QuestionView({
+		el: document.querySelector('.question1'), // Match the class in your html
+		label:'This is a question?',              // Ask your question
+		multiSelect:false,                 // Allow multiple answers or only one?
+		allowOther:false,
+		//expanded:false,
+		//required:false,
+		selectedAnswer:'second-answer',  // Use a string for single default answer
+		//selectedAnswer:[               // Use an array to select multiple defaults
+		//	'second-answer',
+		//	'fourth-answer'
+		//],
+		answers:[                        // Array of answer options objects
+			{
+				value:'first-answer',
+				label:'Answer 1'
+			},
+			{
+				value:'second-answer',
+				label:'Answer 2'
+			},
+			{
+				value:'third-answer',
+				label:'Answer 3'
+			}
+		]
+	});
+
+	new QuestionView({
 		el: document.querySelector('.question1'),
-		title:'This is a question?',
+		label:'This is a question?',
 		multiSelect:false,
 		allowOther:false,
 		//expanded:false,
@@ -25,22 +53,22 @@ require([
 		answers:[
 			{
 				value:'first-answer',
-				title:'Answer 1'
+				label:'Answer 1'
 			},
 			{
 				value:'second-answer',
-				title:'Answer 2'
+				label:'Answer 2'
 			},
 			{
 				value:'third-answer',
-				title:'Answer 3'
+				label:'Answer 3'
 			}
 		]
 	});
 
 	new QuestionView({
 		el: document.querySelector('.question2'),
-		title:'This IS a question!',
+		label:'This IS a question!',
 		multiSelect:true,
 		allowOther:false,
 		//expanded:false,
@@ -48,22 +76,22 @@ require([
 		answers:[
 			{
 				value:'first-answer',
-				title:'My answer'
+				label:'My answer'
 			},
 			{
 				value:'second-answer',
-				title:'Your answer'
+				label:'Your answer'
 			},
 			{
 				value:'third-answer',
-				title:'Their answer'
+				label:'Their answer'
 			}
 		]
 	});
 
 	new QuestionView({
 		el: document.querySelector('.question3'),
-		title:'This one uses an "other" box',
+		label:'This one uses an "other" box',
 		multiSelect:false,
 		allowOther:true,
 		//expanded:false,
@@ -71,18 +99,18 @@ require([
 		answers:[
 			{
 				value:'first-answer',
-				title:'Some answer'
+				label:'Some answer'
 			},
 			{
 				value:'second-answer',
-				title:'Another answer'
+				label:'Another answer'
 			}
 		]
 	});
 
 	new QuestionView({
 		el: document.querySelector('.question4'),
-		title:'These ones are in a div',
+		label:'These ones are in a div',
 		multiSelect:true,
 		allowOther:true,
 		//expanded:false,
@@ -94,30 +122,30 @@ require([
 		answers:[
 			{
 				value:'first-answer',
-				title:'#1'
+				label:'#1'
 			},
 			{
 				value:'second-answer',
-				title:'#2'
+				label:'#2'
 			},
 			{
 				value:'third-answer',
-				title:'#3'
+				label:'#3'
 			},
 			{
 				value:'fourth-answer',
-				title:'#4'
+				label:'#4'
 			},
 			{
 				value:'fifth-answer',
-				title:'#5'
+				label:'#5'
 			}
 		]
 	});
 
 	new QuestionView({
 		el: document.querySelector('.question5'),
-		title:'One last question',
+		label:'One last question',
 		multiSelect:true,
 		allowOther:false,
 		//expanded:false,
@@ -125,27 +153,27 @@ require([
 		answers:[
 			{
 				value:'answer-high',
-				title:'High'
+				label:'High'
 			},
 			{
 				value:'answer-low',
-				title:'Low'
+				label:'Low'
 			},
 			{
 				value:'answer-up',
-				title:'Up'
+				label:'Up'
 			},
 			{
 				value:'answer-down',
-				title:'Down'
+				label:'Down'
 			},
 			{
 				value:'answer-left',
-				title:'Left'
+				label:'Left'
 			},
 			{
 				value:'answer-right',
-				title:'Right'
+				label:'Right'
 			}
 		]
 	});

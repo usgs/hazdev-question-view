@@ -119,13 +119,13 @@ define([
 			answer = answers[i];
 			if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
 				this._answerList.push({
-					options: answer,
+					option: answer,
 					input: this._answers.querySelector('.answer-' + i + ' > input'),
 					otherInput: this._answers.querySelector('.other > input[type="text"]')
 				});
 			} else {
 				this._answerList.push({
-					options: answer,
+					option: answer,
 					input: this._answers.querySelector('.answer-' + i + ' > input')
 				});
 			}
@@ -163,7 +163,7 @@ define([
 			answer = answerList[i];
 			if (answer.input.checked) {
 				currentAnswer.push(
-					answer.options
+					answer.option
 				);
 			}
 		}
@@ -209,12 +209,12 @@ define([
 			for (var i=0; i<len; i++) {
 				if (multiSelect) { // Check boxes
 					for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
-						if (selectedAnswer[j] == answerList[i].options.value) {
+						if (selectedAnswer[j] == answerList[i].option.value) {
 							answerList[i].input.checked="checked";
 						}
 					}
 				} else {           // Radio buttons
-					if (selectedAnswer == answerList[i].options.value) {
+					if (selectedAnswer == answerList[i].option.value) {
 						answerList[i].input.checked="checked";
 					}
 				}

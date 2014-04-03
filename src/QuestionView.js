@@ -78,7 +78,6 @@ define([
 		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
 		    answers = options.answers,
 		    answer,
-		    //addOther = options.allowOther,
 		    questionId = 'question-' + ++ID_SEQUENCE,
 		    answerId,
 		    buf = [];
@@ -148,7 +147,6 @@ define([
 	 */
 	QuestionView.prototype.getAnswer = function() {
 		var options = this._options,
-		    //addOther = options.allowOther,
 		    answer,
 		    currentAnswer = [],
 		    answerList = this._answerList;
@@ -226,7 +224,7 @@ define([
 	/**
 	 *
 	 */
-	QuestionView.prototype.setAnswer = function(selectedAnswer) {
+	QuestionView.prototype.setOtherAnswer = function(selectedAnswer) {
 
 	}
 

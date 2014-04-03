@@ -153,6 +153,10 @@ require([
 		multiSelect:true,
 		//expanded:false,
 		//required:false,
+		selectedAnswer:[
+			'answer-high',
+			'answer-low'
+		],
 		answers:[
 			{
 				value:'answer-high',

@@ -45,7 +45,6 @@ define([
 	QuestionView.prototype._initialize = function () {
 		var options = this._options;
 
-		this.el = options.el;
 		// Clear any place holder words within the containing element.
 		this.el.innerHTML = [
 			'<section class="question">',

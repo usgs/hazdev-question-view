@@ -16,8 +16,11 @@
 		input {
 			margin-left: 1em;
 		}
+		.other {
+			margin-left: 1.8em;
+		}
 		.other > input + input[type="text"] {
-			display:inline-block;
+			//display:inline-block;
 		}
 		.other > input:checked + input[type="text"] {
 			//display:inline-block;

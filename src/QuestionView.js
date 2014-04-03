@@ -12,11 +12,14 @@ define([
 		el:document.createElement('section'),
 		label:null,          // The question being asked
 		multiSelect:false,   // For radio buttons or checkboxes, radio is default
-		allowOther:false,    // To create a text field when other is selected
 		//expanded:false,      // Expanded view for displaying list of answers
 		//required:false,      // To mark a question as being required to answer
 		selectedAnswer:null, // Any answers that should be selected by default
-		answers:null
+		answers:null  // Array of answers, each with attributes:
+		              // value - The "value" for the input
+		              // label - The answer to show the user
+		              // otherValue - optional extra value for more info
+		              // otherLabel - Question to ask associate with otherValue
 	};
 	var ID_SEQUENCE = 0;
 
@@ -40,8 +43,7 @@ define([
 	};
 
 	QuestionView.prototype._initialize = function () {
-		var options = this._options,
-		    textBox;
+		var options = this._options;
 
 		this.el = options.el;
 		// Clear any place holder words within the containing element.
@@ -76,7 +78,7 @@ define([
 		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
 		    answers = options.answers,
 		    answer,
-		    addOther = options.allowOther,
+		    //addOther = options.allowOther,
 		    questionId = 'question-' + ++ID_SEQUENCE,
 		    answerId,
 		    buf = [];
@@ -96,9 +98,22 @@ define([
 					answer.label,
 				'</label>'
 			);
+			if (answer.otherLabel !== undefined && answer.otherLabel !== null) {
+				buf.push(
+					'<label for="', answerId, '" class="answer-', i, '-other other">',
+					answer.otherLabel,
+					'<input',
+						' type="textbox"',
+						' name="', questionId, '-other"',
+						' id="', answerId, '-other"',
+						' value="', answer.otherValue, '"',
+						'/>',
+					'</label>'
+				);
+			}
 		}
 
-		if (addOther) {
+		/*if (addOther) {
 			answerId = 'answer-' + ++ID_SEQUENCE;
 			buf.push(
 				'<label for="', answerId, '" class="other">',
@@ -112,7 +127,7 @@ define([
 					'<input type="text"/>',
 				'</label>'
 			);
-		}
+		}*/
 
 		this._answers.innerHTML = buf.join('');
 
@@ -124,12 +139,12 @@ define([
 				input: this._answers.querySelector('.answer-' + i + ' > input')
 			});
 		}
-		if (addOther){
+		/*if (addOther){
 			this._other = {
 				input: this._answers.querySelector('.other > input'),
 				value: this._answers.querySelector('.other > input[type="text"]')
 			};
-		}
+		}*/
 	};
 
 

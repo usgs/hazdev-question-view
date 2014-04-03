@@ -34,7 +34,7 @@ require([
 				value:'first-answer',        // 'Value' for the input element
 				label:'Answer 1'             // The human-friendly answer to show
 				//otherValue:'how-high',     // Extra value when this answer is selected
-				//otherLabel:'How high?'     // Human-friendly label for the extra info
+				//otherLabel:'How high?'     // Default answer, replaced by user input
 			},
 			{
 				value:'second-answer',
@@ -106,7 +106,9 @@ require([
 			},
 			{
 				value:'second-answer',
-				label:'Another answer'
+				label:'Another answer',
+				otherValue:'Please specify...',
+				otherLabel:'Other:'
 			}
 		]
 	});

@@ -14,6 +14,12 @@ require([
 ) {
 	'use strict';
 
+	// Callback function for question change events
+	var onQuestionChange = function (question) {
+		console.log('question has changed');
+		console.log(question.getAnswer());
+	};
+
 /*
    // ----------------------------------------------------------------------
    // Example of all values with comments
@@ -22,8 +28,6 @@ require([
 		el: document.querySelector('.question1'), // Match the class in your html
 		label:'This is a question?',              // Ask your question
 		multiSelect:false,               // Allow multiple answers or only one?
-		//expanded:false,                // Not yet implemented
-		//required:false,                // Not yet implemented
 		selectedAnswer:'second-answer',  // Use a string for single default answer
 		//selectedAnswer:[               // Use an array to select multiple defaults
 		//	'second-answer', // These strings need to match one of the answer:values
@@ -52,8 +56,6 @@ require([
 		el: document.querySelector('.question1'),
 		label:'This is a question?',
 		multiSelect:false,
-		//expanded:false,
-		//required:false,
 		selectedAnswer:'second-answer',
 		answers:[
 			{
@@ -71,12 +73,11 @@ require([
 		]
 	});
 
+	// This question is bound anonymously to the callback function
 	new QuestionView({
 		el: document.querySelector('.question2'),
 		label:'This IS a question!',
 		multiSelect:true,
-		//expanded:false,
-		//required:false,
 		answers:[
 			{
 				value:'first-answer',
@@ -91,14 +92,12 @@ require([
 				label:'Their answer'
 			}
 		]
-	});
+	}).on('change', onQuestionChange);
 
 	new QuestionView({
 		el: document.querySelector('.question3'),
 		label:'This one uses an "other" box',
 		multiSelect:false,
-		//expanded:false,
-		//required:false,
 		answers:[
 			{
 				value:'first-answer',
@@ -113,12 +112,10 @@ require([
 		]
 	});
 
-	new QuestionView({
+	var question4 = new QuestionView({
 		el: document.querySelector('.question4'),
 		label:'These ones are in a div',
 		multiSelect:true,
-		//expanded:false,
-		//required:false,
 		selectedAnswer:[
 			'second-answer',
 			'fourth-answer'
@@ -147,12 +144,11 @@ require([
 		]
 	});
 
-	new QuestionView({
+	// Set the question to a variable to use in the callback function
+	var question5 = new QuestionView({
 		el: document.querySelector('.question5'),
 		label:'One last question',
 		multiSelect:true,
-		//expanded:false,
-		//required:false,
 		selectedAnswer:[
 			'answer-high',
 			'answer-low'
@@ -196,4 +192,8 @@ require([
 			}
 		]
 	});
+
+	// Bind the callback function to the change event
+	question5.on('change', onQuestionChange);
+	question4.on('change', onQuestionChange);
 });

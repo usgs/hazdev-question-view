@@ -168,17 +168,6 @@ define([
 			}
 		}
 
-		/*if (addOther) {
-			if (this._other.input.checked) {
-				currentAnswer.push(
-					{
-						value: 'other',
-						label: this._other.value.value
-					}
-				);
-			}
-		}*/
-
 		if (currentAnswer.length === 0) {
 			return null;
 		} else if (options.multiSelect) {
@@ -201,7 +190,7 @@ define([
 
 		if (selectedAnswer !== null) {
 			var len=answerList.length;
-			// Make sure everything is not checked first
+			// Make sure everything is unchecked first
 			for (var k=0; k<len; k++) {
 				answerList[k].input.checked=false;
 			}

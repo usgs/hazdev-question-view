@@ -184,6 +184,25 @@ define([
 	// ----------------------------------------------------------------------
 
 	/**
+	 * Clean up event listeners
+	 */
+	QuestionView.prototype.destroy = function () {
+		var answerList = this._answerList,
+		    i,
+		    len;
+
+		for (i=0, len=answerList.length; i<len; i++) {
+			answerList[i].input.removeEventListener('change', this._onChange);
+			answerList[i].input = null;
+			if (answerList[i].otherInput !== null) {
+				answerList[i].otherInput.removeEventListener('blur', this._onBlur);
+				answerList[i].otherInput = null;
+			}
+		}
+		this._answerList = null;
+	}
+
+	/**
 	 * Return list of answers.
 	 *
 	 * @return {Object|Array}
@@ -256,20 +275,6 @@ define([
 			}
 		}
 	};
-
-	/**
-	 *
-	 */
-	QuestionView.prototype.getOtherAnswer = function() {
-
-	}
-
-	/**
-	 *
-	 */
-	QuestionView.prototype.setOtherAnswer = function(selectedAnswer) {
-
-	}
 
 	return QuestionView;
 });

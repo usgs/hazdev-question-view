@@ -40,12 +40,16 @@ define([
 				expect(typeof QuestionView).to.equal('function');
 			});
 
+			it('Can be instantiated', function () {
+				expect(emptyQuestion).to.be.an.instanceof(QuestionView);
+			});
+
 			it('Inherits from View', function () {
 				expect(emptyQuestion).to.be.an.instanceof(View);
 			});
 
 			it('Sets options on itself', function () {
-				expect(new QuestionView).to.be.an.instanceof(Object);
+				expect(emptyQuestion).to.be.an.instanceof(Object);
 			});
 
 		});
@@ -98,6 +102,7 @@ define([
 				question._answerList[1].input.dispatchEvent(getChangeEvent());
 				expect(question._answerList[1].otherInput.disabled).to.equal(true);
 			});
+
 		});
 
 		describe('_onBlur', function () {

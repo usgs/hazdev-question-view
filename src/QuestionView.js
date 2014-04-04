@@ -12,11 +12,11 @@ define([
 		label:null,          // The question being asked
 		multiSelect:false,   // For radio buttons or checkboxes, radio is default
 		selectedAnswer:null, // Any answers that should be selected by default
-		answers:null  // Array of answers, each with attributes:
-		              // value - The "value" for the input
-		              // label - The answer to show the user
-		              // otherValue - optional extra value for more info
-		              // otherLabel - Question to ask associate with otherValue
+		answers:null      // Array of answers, each with attributes:
+		                  //  value - The "value" for the input
+		                  //  label - The answer to show the user
+		                  //  otherValue - optional extra value for more info
+		                  //  otherLabel - Question to ask associate with otherValue
 	};
 	var ID_SEQUENCE = 0;
 
@@ -47,6 +47,8 @@ define([
 
 		// This is catching the case when the query selector didn't find anything
 		//   should pass back some kind of error for this, but not sure how.
+		//   Most probable cause for this is that html doesn't contain the class
+		//   that the querySelector is looking for to place the question.
 		if (this.el === null) {
 			return;
 		}
@@ -87,6 +89,11 @@ define([
 		    questionId = 'question-' + (++ID_SEQUENCE),
 		    answerId,
 		    buf = [];
+
+		// If the user doesn't provide any answers, should we give them an error?
+		if (answers === null) {
+			return;
+		}
 
 		for (var i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];

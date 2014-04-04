@@ -34,6 +34,9 @@ define([
 	 *        detailed documentation on what can be specified.
 	 */
 	var QuestionView = function (options) {
+		/*console.log(
+			'QuestionView source: https://github.com/usgs/hazdev-question-view'
+		);*/
 		this._options = Util.extend({}, DEFAULTS, options || {});
 		this._answerList = [];
 
@@ -50,6 +53,7 @@ define([
 		//   Most probable cause for this is that html doesn't contain the class
 		//   that the querySelector is looking for to place the question.
 		if (this.el === null) {
+			console.log("There isn't an element to put your question in.");
 			return;
 		}
 
@@ -92,6 +96,7 @@ define([
 
 		// If the user doesn't provide any answers, should we give them an error?
 		if (answers === null) {
+			console.log('You need to provide answers for your question.');
 			return;
 		}
 

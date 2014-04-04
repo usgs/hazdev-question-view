@@ -78,13 +78,13 @@ define([
 		    answers = options.answers,
 		    answer,
 		    answerList = this._answerList,
-		    questionId = 'question-' + ++ID_SEQUENCE,
+		    questionId = 'question-' + (++ID_SEQUENCE),
 		    answerId,
 		    buf = [];
 
 		for (var i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
-			answerId = 'answer-' + ++ID_SEQUENCE;
+			answerId = 'answer-' + (++ID_SEQUENCE);
 
 			buf.push(
 				'<label for="', answerId, '" class="answer-', i, '">',
@@ -195,7 +195,7 @@ define([
 			}
 		}
 		this._answerList = null;
-	}
+	};
 
 	/**
 	 * Return list of answers.
@@ -251,7 +251,7 @@ define([
 			var answer = answerList[i];
 
 			if (multiSelect) { // Check boxes
-				checked = false
+				checked = false;
 				if (selectedAnswer !== null) {
 					for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
 						if (selectedAnswer[j] === answer.option.value){

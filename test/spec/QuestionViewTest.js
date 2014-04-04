@@ -40,13 +40,14 @@ define([
 				expect(typeof QuestionView).to.equal('function');
 			});
 
-			/*it('Inherits from View', function () {
-				expect(new QuestionView()).to.be.an.instanceof(View);
-			});*/
+			it('Inherits from View', function () {
+				expect(emptyQuestion).to.be.an.instanceof(View);
+			});
 
-			/*it('sets options on itself', function () {
+			it('Sets options on itself', function () {
 				expect(new QuestionView).to.be.an.instanceof(Object);
-			});*/
+			});
+
 		});
 
 		describe('_onChange', function () {
@@ -73,9 +74,7 @@ define([
 				question._answerList[1].input.dispatchEvent(getChangeEvent());
 				expect(question._answerList[1].otherInput.disabled).to.equal(false);
 			});
-		});
 
-		describe('_onChange', function () {
 			it('Disables "other" input when de-selected', function () {
 				var question = new QuestionView({
 					label:'This one uses an "other" box',

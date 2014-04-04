@@ -3,29 +3,33 @@ define([
 	'chai',
 	'sinon',
 
+	'mvc/View',
 	'QuestionView'
 ], function (
 	chai,
 	sinon,
 
+	View,
 	QuestionView
 ) {
 	'use strict';
 	var expect = chai.expect;
 
+	var emptyQuestion = new QuestionView({});
+
 	var getClickEvent = function () {
-		var clickEvent = document.createEvent('MouseEvents');
-		clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0);
-		return clickEvent;
+		var evt = document.createEvent('MouseEvents');
+		evt.initMouseEvent('click', true, true, window, 1, 0, 0);
+		return evt;
 	};
 	var getChangeEvent = function () {
-		var evt = document.createEvent("HTMLEvents");
-		evt.initEvent("change", false, true);
+		var evt = document.createEvent('HTMLEvents');
+		evt.initEvent('change', false, true);
 		return evt;
 	};
 	var getBlurEvent = function () {
-		var evt = document.createEvent("HTMLEvents");
-		evt.initEvent("blur", false, true);
+		var evt = document.createEvent('HTMLEvents');
+		evt.initEvent('blur', false, true);
 		return evt;
 	};
 
@@ -35,6 +39,14 @@ define([
 			it('Is defined', function () {
 				expect(typeof QuestionView).to.equal('function');
 			});
+
+			/*it('Inherits from View', function () {
+				expect(new QuestionView()).to.be.an.instanceof(View);
+			});*/
+
+			/*it('sets options on itself', function () {
+				expect(new QuestionView).to.be.an.instanceof(Object);
+			});*/
 		});
 
 		describe('_onChange', function () {
@@ -60,6 +72,32 @@ define([
 				question._answerList[1].input.checked = true;
 				question._answerList[1].input.dispatchEvent(getChangeEvent());
 				expect(question._answerList[1].otherInput.disabled).to.equal(false);
+			});
+		});
+
+		describe('_onChange', function () {
+			it('Disables "other" input when de-selected', function () {
+				var question = new QuestionView({
+					label:'This one uses an "other" box',
+					multiSelect:false,
+					answers:[
+						{
+							value:'first-answer',
+							label:'Some answer'
+						},
+						{
+							value:'second-answer',
+							label:'Another answer',
+							otherValue:'Please specify...',
+							otherLabel:'Other:'
+						}
+					]
+				});
+
+				expect(question._answerList[1].otherInput.disabled).to.equal(true);
+				question._answerList[1].input.checked = false;
+				question._answerList[1].input.dispatchEvent(getChangeEvent());
+				expect(question._answerList[1].otherInput.disabled).to.equal(true);
 			});
 		});
 

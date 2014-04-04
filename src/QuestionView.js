@@ -45,6 +45,12 @@ define([
 	QuestionView.prototype._initialize = function () {
 		var options = this._options;
 
+		// This is catching the case when the query selector didn't find anything
+		//   should pass back some kind of error for this, but not sure how.
+		if (this.el === null) {
+			return;
+		}
+
 		// Clear any place holder words within the containing element.
 		this.el.innerHTML = [
 			'<section class="question">',

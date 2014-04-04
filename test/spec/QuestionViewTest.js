@@ -40,22 +40,53 @@ define([
 				expect(typeof QuestionView).to.equal('function');
 			});
 
-			it('Can be instantiated', function () {
+			it('Can be instantiated.', function () {
 				expect(emptyQuestion).to.be.an.instanceof(QuestionView);
 			});
 
-			it('Inherits from View', function () {
+			it('Inherits from View.', function () {
 				expect(emptyQuestion).to.be.an.instanceof(View);
 			});
 
-			it('Sets options on itself', function () {
+			it('Sets options on itself.', function () {
 				expect(emptyQuestion).to.be.an.instanceof(Object);
+			});
+
+			it('Can be required.', function () {
+				/* jshint -W030 */
+				expect(QuestionView).to.not.be.null;
+				/* jshint +W030 */
+			});
+
+			it('Has all expected methods.', function () {
+				expect(emptyQuestion).to.respondTo('_addAnswers');
+				expect(emptyQuestion).to.respondTo('_onChange');
+				expect(emptyQuestion).to.respondTo('_onBlur');
+				expect(emptyQuestion).to.respondTo('destroy');
+				expect(emptyQuestion).to.respondTo('getAnswer');
+				expect(emptyQuestion).to.respondTo('setAnswer');
+			});
+
+			it('Has all expected properties.', function () {
+				expect(emptyQuestion).to.have.property('_options');
+				expect(emptyQuestion).to.have.property('_answerList');
+				expect(emptyQuestion).to.have.property('_label');
+				expect(emptyQuestion).to.have.property('_answers');
+			});
+
+			it('Has proper default attributes.', function () {
+				/* jshint -W030 */
+				expect(emptyQuestion.el).to.not.be.null;
+				expect(emptyQuestion.label).to.not.be.null;
+				expect(emptyQuestion.answers).to.not.be.null;
+				/* jshint +W030 */
 			});
 
 		});
 
 		describe('_onChange', function () {
-			it('Enables "other" input when selected', function () {
+
+			it('Enables "other" input when selected.', function () {
 				var question = new QuestionView({
 					label:'This one uses an "other" box',
 					multiSelect:false,
@@ -79,7 +110,7 @@ define([
 				expect(question._answerList[1].otherInput.disabled).to.equal(false);
 			});
 
-			it('Disables "other" input when de-selected', function () {
+			it('Disables "other" input when de-selected.', function () {
 				var question = new QuestionView({
 					label:'This one uses an "other" box',
 					multiSelect:false,
@@ -106,7 +137,7 @@ define([
 		});
 
 		describe('_onBlur', function () {
-			it('Triggers change event when value has changed', function () {
+			it('Triggers change event when value has changed.', function () {
 				var spy = sinon.spy();
 				var question = new QuestionView({
 					label:'This one uses an "other" box',

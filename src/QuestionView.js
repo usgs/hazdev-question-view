@@ -48,15 +48,6 @@ define([
 	QuestionView.prototype._initialize = function () {
 		var options = this._options;
 
-		// This is catching the case when the query selector didn't find anything
-		//   should pass back some kind of error for this, but not sure how.
-		//   Most probable cause for this is that html doesn't contain the class
-		//   that the querySelector is looking for to place the question.
-		if (this.el === null) {
-			console.log('There is no element to put your question in.');
-			return;
-		}
-
 		// Clear any place holder words within the containing element.
 		this.el.innerHTML = [
 			'<section class="question">',
@@ -73,8 +64,6 @@ define([
 		this._answers = this.el.querySelector('.question-options');
 		this._addAnswers();
 		this.setAnswer(options.selectedAnswer);
-
-		this.getAnswer();  // TODO remove this when done testing
 	};
 
 	/**
@@ -93,12 +82,6 @@ define([
 		    questionId = 'question-' + (++ID_SEQUENCE),
 		    answerId,
 		    buf = [];
-
-		// If the user doesn't provide any answers, should we give them an error?
-		if (answers === null) {
-			console.log('You need to provide answers for your question.');
-			return;
-		}
 
 		for (var i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];

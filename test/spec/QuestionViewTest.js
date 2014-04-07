@@ -15,7 +15,14 @@ define([
 	'use strict';
 	var expect = chai.expect;
 
-	var emptyQuestion = new QuestionView({});
+	var emptyQuestion = new QuestionView({
+		answers:[
+			{
+				value:null,
+				label:null
+			}
+		]
+	});
 
 	var getClickEvent = function () {
 		var evt = document.createEvent('MouseEvents');
@@ -172,7 +179,14 @@ define([
 		});
 
 		describe('destroy()', function () {
-			var q = new QuestionView({});
+			var q = new QuestionView({
+				answers:[
+					{
+						value:null,
+						label:null
+					}
+				]
+			});
 
 			it('Sould be null after destroyed.', function () {
 				/* jshint -W030 */

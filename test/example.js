@@ -106,8 +106,8 @@ require([
 			{
 				value:'second-answer',
 				label:'Another answer',
-				otherValue:'Please specify...',
-				otherLabel:'Other:'
+				otherValue:'',
+				otherLabel:'Other'
 			}
 		]
 	});

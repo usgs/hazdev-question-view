@@ -49,19 +49,24 @@ define([
 		var options = this._options;
 
 		// Clear any place holder words within the containing element.
-		this.el.innerHTML = [
+		/*this.el.innerHTML = [
 			'<section class="question">',
 				'<header class="question-label"></header>',
 				'<div class="question-options"></div>',
 			'</section>'
+		].join('');*/
+		this.el.innerHTML = [
+			'<section class="question">',
+			'</section>'
 		].join('');
 
 		// The question being asked (question-label)
-		this._label = this.el.querySelector('.question-label');
-		this._label.innerHTML = options.label;
+		//this._label = this.el.querySelector('.question-label');
+		//this._label.innerHTML = options.label;
 
 		// The list of answers
-		this._answers = this.el.querySelector('.question-options');
+		//this._answers = this.el.querySelector('.question-options');
+		this._answers = this.el.querySelector('.question');
 		this._addAnswers();
 		this.setAnswer(options.selectedAnswer);
 	};
@@ -83,11 +88,18 @@ define([
 		    answerId,
 		    buf = [];
 
+		buf.push(
+			'<fieldset name="', questionId ,'">',
+				'<legend>',
+					this._options.label,
+				'</legend>',
+				'<ul>'
+		);
 		for (var i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
 			answerId = 'answer-' + (++ID_SEQUENCE);
 
-			buf.push(
+			/*buf.push(
 				'<label for="', answerId, '" class="answer-', i, '">',
 					'<input',
 						' type="', inputType, '"',
@@ -110,8 +122,39 @@ define([
 						'/>',
 					'</label>'
 				);
+			}*/
+			buf.push(
+				'<li>',
+					'<label for="', answerId, '" class="answer-', i, '">',
+						'<input',
+							' type="', inputType, '"',
+							' name="', questionId, '"',
+							' id="', answerId, '"',
+							' value="', answer.value, '"',
+							'/>',
+						answer.label,
+					'</label>'
+			);
+			if (typeof answer.otherLabel === 'string') {
+				buf.push(
+					'<input',
+						' type="textbox"',
+						' name="', questionId, '-other"',
+						' id="', answerId, '-other"',
+						' value="', answer.otherValue, '"',
+						' placeholder="', answer.otherLabel, '"',
+						' class="other"',
+						'/>'
+				);
 			}
+			buf.push(
+				'</li>'
+			);
 		}
+		buf.push(
+				'</ul>',
+			'</fieldset>'
+		);
 
 		this._answers.innerHTML = buf.join('');
 
@@ -137,6 +180,17 @@ define([
 			}
 		}
 	};
+
+	/**
+	 * Wrap a single answer in appropriate html.
+	 *
+	 * @return String
+	 *         Contains an answer wrapped in appropriate HTML.
+	 *
+	 */
+	QuestionView.prototype._addAnswer = function () {
+
+	}
 
 	QuestionView.prototype._onChange = function (ev) {
 		var target = ev.target,
@@ -180,7 +234,8 @@ define([
 	// ----------------------------------------------------------------------
 
 	/**
-	 * Clean up event listeners
+	 * Clean up event listeners, remove list of answers
+	 *
 	 */
 	QuestionView.prototype.destroy = function () {
 		var answerList = this._answerList,
@@ -206,7 +261,7 @@ define([
 	 *         An object containing a single answer if only 1 is selected
 	 *         An array of answer objects if there is more than 1
 	 */
-	QuestionView.prototype.getAnswer = function() {
+	QuestionView.prototype.getAnswer = function () {
 		var options = this._options,
 		    answer,
 		    currentAnswer = [],
@@ -235,8 +290,10 @@ define([
 	 * Assumes a string for the value of a single answer if multiSelect:false
 	 * Assumes an array of answer values if multiSelect:true
 	 *
+	 * @param {String|Array}
+	 *        The list of currently selected answers as strings
 	 */
-	QuestionView.prototype.setAnswer = function(selectedAnswer) {
+	QuestionView.prototype.setAnswer = function (selectedAnswer) {
 		var options = this._options,
 		    answerList = this._answerList,
 		    multiSelect = options.multiSelect,

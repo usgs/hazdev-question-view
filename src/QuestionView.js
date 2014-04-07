@@ -53,7 +53,7 @@ define([
 		//   Most probable cause for this is that html doesn't contain the class
 		//   that the querySelector is looking for to place the question.
 		if (this.el === null) {
-			console.log("There isn't an element to put your question in.");
+			console.log('There is no element to put your question in.');
 			return;
 		}
 

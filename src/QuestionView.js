@@ -48,26 +48,27 @@ define([
 	QuestionView.prototype._initialize = function () {
 		var options = this._options;
 
-		// Clear any place holder words within the containing element.
-		/*this.el.innerHTML = [
-			'<section class="question">',
-				'<header class="question-label"></header>',
-				'<div class="question-options"></div>',
-			'</section>'
-		].join('');*/
+		// https://developer.mozilla.org/en-US/docs/Web/API/document.createDocumentFragment
+		var docFragment = document.createDocumentFragment();
+		var section = document.createElement("section");
+		section.classList.add("question");
+		docFragment.appendChild(section);
+		// console.log(docFragment);
+
 		this.el.innerHTML = [
 			'<section class="question">',
 			'</section>'
 		].join('');
-
-		// The question being asked (question-label)
-		//this._label = this.el.querySelector('.question-label');
-		//this._label.innerHTML = options.label;
+		// console.log(this.el.innerHTML);
 
 		// The list of answers
-		//this._answers = this.el.querySelector('.question-options');
 		this._answers = this.el.querySelector('.question');
 		this._addAnswers();
+
+		section.appendChild(this._addAnswers());
+		docFragment.appendChild(section);
+		console.log(docFragment);
+
 		this.setAnswer(options.selectedAnswer);
 	};
 
@@ -88,6 +89,14 @@ define([
 		    answerId,
 		    buf = [];
 
+		var answerFragment = document.createDocumentFragment();
+		var fieldset = document.createElement("fieldset");
+		fieldset.name = questionId;
+		var legend = document.createElement("legend");
+		fieldset.appendChild(legend);
+		var ul = document.createElement("ul");
+
+
 		buf.push(
 			'<fieldset name="', questionId ,'">',
 				'<legend>',
@@ -99,30 +108,18 @@ define([
 			answer = answers[i];
 			answerId = 'answer-' + (++ID_SEQUENCE);
 
-			/*buf.push(
-				'<label for="', answerId, '" class="answer-', i, '">',
-					'<input',
-						' type="', inputType, '"',
-						' name="', questionId, '"',
-						' id="', answerId, '"',
-						' value="', answer.value, '"',
-						'/>',
-					answer.label,
-				'</label>'
-			);
-			if (typeof answer.otherLabel === 'string') {
-				buf.push(
-					'<label for="', answerId, '" class="answer-', i, '-other other">',
-					answer.otherLabel,
-					'<input',
-						' type="textbox"',
-						' name="', questionId, '-other"',
-						' id="', answerId, '-other"',
-						' value="', answer.otherValue, '"',
-						'/>',
-					'</label>'
-				);
-			}*/
+			var li = document.createElement("li");
+			var label = document.createElement("label");
+			label.for = answerId;
+			label.classList.add("answer");
+			var input = document.createElement("input");
+			input.type = inputType;
+			input.name = questionId;
+			input.id = answerId;
+			input.value = answer.value;
+			label.appendChild(input);
+			li.appendChild(label);
+
 			buf.push(
 				'<li>',
 					'<label for="', answerId, '" class="answer-', i, '">',
@@ -136,6 +133,15 @@ define([
 					'</label>'
 			);
 			if (typeof answer.otherLabel === 'string') {
+				var textbox = document.createElement("input");
+				textbox.type = 'textbox';
+				textbox.name = questionId+'-other';
+				textbox.id = answerId+'-other';
+				textbox.value = answer.otherValue;
+				textbox.classList.add("other");
+				textbox.placeholder = answer.otherLabel;
+				li.appendChild(textbox);
+
 				buf.push(
 					'<input',
 						' type="textbox"',
@@ -150,11 +156,16 @@ define([
 			buf.push(
 				'</li>'
 			);
+			ul.appendChild(li);
 		}
+
 		buf.push(
 				'</ul>',
 			'</fieldset>'
 		);
+
+		fieldset.appendChild(ul);
+		answerFragment.appendChild(fieldset);
 
 		this._answers.innerHTML = buf.join('');
 
@@ -179,6 +190,8 @@ define([
 				answerList[i].otherInput.addEventListener('blur', this._onBlur);
 			}
 		}
+
+		return answerFragment;
 	};
 
 	/**
@@ -297,36 +310,75 @@ define([
 		var options = this._options,
 		    answerList = this._answerList,
 		    multiSelect = options.multiSelect,
-		    checked;
+		    checked,
+		    answer,
+		    answerIndex;
 
 		var len=answerList.length;
+		var index={};
 		// Make sure everything is unchecked first
 		for (var k=0; k<len; k++) {
 			answerList[k].input.checked=false;
+			if (answerList[k].otherInput) {
+				answerList[k].otherInput.disabled=true;
+			}
+
+			index[answerList[k].value]=k;
 		}
 
-		for (var i=0; i<len; i++) {
-			var answer = answerList[i];
+		if (selectedAnswer === null) {
+			return;
+		}
 
-			if (multiSelect) { // Check boxes
-				checked = false;
-				if (selectedAnswer !== null) {
-					for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
-						if (selectedAnswer[j] === answer.option.value){
-							checked = true;
-							break;
+		if (typeof selectedAnswer === 'string') {
+			answerIndex = index[selectedAnswer];
+			if (typeof answerIndex !== 'undefined') {
+				answer = answerList[answerIndex];
+				if (answer.input) {
+					answer.input = checked;
+					if (answer.otherInput) {
+						answer.otherInput.disabled=false;
+					}
+				}
+			}
+		} else {
+			for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
+				answerIndex = index[selectedAnswer[j]];
+				if (typeof answerIndex !== 'undefined') {
+					answer = answerList[answerIndex];
+					if (answer.input) {
+						answer.input = checked;
+						if (answer.otherInput) {
+							answer.otherInput.disabled=false;
 						}
 					}
 				}
-			} else {           // Radio buttons
-				checked = (selectedAnswer === answer.option.value);
-			}
-
-			answer.input.checked=checked;
-			if (answer.otherInput !== null) {
-				answer.otherInput.disabled = !checked;
 			}
 		}
+
+		// for (var i=0; i<len; i++) {
+		// 	var answer = answerList[i];
+
+		// 	if (multiSelect) { // Check boxes
+		// 		checked = false;
+		// 		if (selectedAnswer !== null) {
+		// 			for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
+		// 				if (selectedAnswer[j] === answer.option.value){
+		// 					checked = true;
+		// 					break;
+		// 				}
+		// 			}
+		// /*			answerList[index[selectedAnswer]].input = checked;
+		// 		}
+		// 	} else {           // Radio buttons
+		// 		checked = (selectedAnswer === answer.option.value);
+		// 	}
+
+			// answer.input.checked=checked;
+			// if (answer.otherInput !== null) {
+			// 	answer.otherInput.disabled = !checked;
+			// }
+		// }
 	};
 
 	return QuestionView;

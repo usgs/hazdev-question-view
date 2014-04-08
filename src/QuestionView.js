@@ -83,6 +83,7 @@ define([
 			this._addAnswer(answers[i], questionId, ul);
 		}
 		answerList.appendChild(ul);
+		this._answerList = answerList;
 
 		// Bind and add event listeners to all inputs
 		this._onChange = this._onChange.bind(this);
@@ -142,21 +143,28 @@ define([
 	}
 
 	/**
+	 * Event listener for "other" inputs.
+	 *       Enable or disable text boxes associated with "other".
+	 *       Put focus in text box when associated radio/checkbox is selected.
 	 *
 	 */
 	QuestionView.prototype._onChange = function (ev) {
 		var target = ev.target,
 		    answerList = this._answerList,
+		    answerElement = answerList.getElementsByTagName('li'),
 		    i,
 		    len,
 		    checked;
 
-		for (i=0, len=answerList.length; i<len; i++) {
-			if (answerList[i].otherInput !== null) {
-				checked = answerList[i].input.checked;
-				answerList[i].otherInput.disabled = !checked;
-				if (answerList[i].input === target && checked) {
-					answerList[i].otherInput.focus();
+		for (i=0, len=answerElement.length; i<len; i++) {
+			var inputs = answerElement[i].getElementsByTagName('input')
+			// If there is an "other" input textbox
+			if (inputs[1] !== undefined) {
+				checked = inputs[0].checked;
+				inputs[1].disabled = !checked;
+				// If the "other" input checkbox for this textbox is target
+				if (inputs[0] === target && checked) {
+					inputs[1].focus();
 				}
 			}
 		}

@@ -55,6 +55,8 @@ define([
 
 		this.el.innerHTML = "";
 		this.el.appendChild(section);
+
+		this.getAnswer(); // TODO remove after testing
 	};
 
 	/**
@@ -154,10 +156,10 @@ define([
 		    answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
 		    i,
-		    len,
+		    len = answerElement.length,
 		    checked;
 
-		for (i=0, len=answerElement.length; i<len; i++) {
+		for (i=0; i<len; i++) {
 			var inputs = answerElement[i].getElementsByTagName('input')
 			// If there is an "other" input textbox
 			if (inputs[1] !== undefined) {
@@ -184,9 +186,9 @@ define([
 		    answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
 		    i,
-		    len;
+		    len = answerElement.length;
 
-		for (i=0, len=answerElement.length; i<len; i++) {
+		for (i=0; i<len; i++) {
 			var inputs = answerElement[i].getElementsByTagName('input')
 			if (inputs[1] === target) {
 				if (answers[i].otherValue !== target.value) {
@@ -209,10 +211,11 @@ define([
 	 */
 	QuestionView.prototype.destroy = function () {
 		var answerList = this._answerList,
+				answerElement = answerList.getElementsByTagName('li'),
 		    i,
-		    len;
+		    len = answerElement.length;
 
-		for (i=0, len=answerList.length; i<len; i++) {
+		for (i=0; i<len; i++) {
 			answerList[i].input.removeEventListener('change', this._onChange);
 			answerList[i].input = null;
 			if (answerList[i].otherInput !== null) {
@@ -235,11 +238,14 @@ define([
 		var options = this._options,
 		    answer,
 		    currentAnswer = [],
-		    answerList = this._answerList;
+		    answerList = this._answerList,
+		    answerElement = answerList.getElementsByTagName('li'),
+		    i,
+		    len = answerElement.length;
 
-		for (var i=0, len=answerList.length; i<len; i++) {
-			answer = answerList[i];
-			if (answer.input.checked) {
+		for (i=0; i<len; i++) {
+			var inputs = answerElement[i].getElementsByTagName('input')
+			if (inputs.checked) {
 				currentAnswer.push(
 					answer.option
 				);
@@ -269,15 +275,24 @@ define([
 		    multiSelect = options.multiSelect,
 		    checked,
 		    answer,
-		    answerIndex;
+		    answerIndex,
+		    i,
+		    j,
+		    k,
+		    len = answerList.length,
+		    len2,
+		    index = {};
 
-		var len=answerList.length;
-		var index={};
+		// console.log('setAnswer');
+		// console.log(answerList.length);
 		// Make sure everything is unchecked first
-		for (var k=0; k<len; k++) {
+		for (k=0; k<len; k++) {
+			// console.log(answerList[k]);
 			answerList[k].input.checked=false;
+			// console.log('unchecking');
 			if (answerList[k].otherInput) {
 				answerList[k].otherInput.disabled=true;
+				// console.log('dsabling');
 			}
 
 			index[answerList[k].value]=k;
@@ -299,7 +314,7 @@ define([
 				}
 			}
 		} else {
-			for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
+			for (j=0, len2=selectedAnswer.length; j<len2; j++) {
 				answerIndex = index[selectedAnswer[j]];
 				if (typeof answerIndex !== 'undefined') {
 					answer = answerList[answerIndex];

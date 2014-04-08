@@ -46,30 +46,14 @@ define([
 	QuestionView.prototype = Object.create(View.prototype);
 
 	QuestionView.prototype._initialize = function () {
-		var options = this._options;
-
-		// https://developer.mozilla.org/en-US/docs/Web/API/document.createDocumentFragment
-		var docFragment = document.createDocumentFragment();
 		var section = document.createElement("section");
 		section.classList.add("question");
-		docFragment.appendChild(section);
-		// console.log(docFragment);
-
-		this.el.innerHTML = [
-			'<section class="question">',
-			'</section>'
-		].join('');
-		// console.log(this.el.innerHTML);
-
-		// The list of answers
-		this._answers = this.el.querySelector('.question');
-		this._addAnswers();
 
 		section.appendChild(this._addAnswers());
-		docFragment.appendChild(section);
-		console.log(docFragment);
 
-		this.setAnswer(options.selectedAnswer);
+		this.setAnswer(this._options.selectedAnswer);
+
+		this.el.appendChild(section);
 	};
 
 	/**
@@ -89,21 +73,19 @@ define([
 		    answerId,
 		    buf = [];
 
-		var answerFragment = document.createDocumentFragment();
 		var fieldset = document.createElement("fieldset");
 		fieldset.name = questionId;
 		var legend = document.createElement("legend");
 		fieldset.appendChild(legend);
 		var ul = document.createElement("ul");
 
-
-		buf.push(
-			'<fieldset name="', questionId ,'">',
-				'<legend>',
-					this._options.label,
-				'</legend>',
-				'<ul>'
-		);
+		// buf.push(
+		// 	'<fieldset name="', questionId ,'">',
+		// 		'<legend>',
+		// 			this._options.label,
+		// 		'</legend>',
+		// 		'<ul>'
+		// );
 		for (var i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
 			answerId = 'answer-' + (++ID_SEQUENCE);
@@ -120,18 +102,19 @@ define([
 			label.appendChild(input);
 			li.appendChild(label);
 
-			buf.push(
-				'<li>',
-					'<label for="', answerId, '" class="answer-', i, '">',
-						'<input',
-							' type="', inputType, '"',
-							' name="', questionId, '"',
-							' id="', answerId, '"',
-							' value="', answer.value, '"',
-							'/>',
-						answer.label,
-					'</label>'
-			);
+			// buf.push(
+			// 	'<li>',
+			// 		'<label for="', answerId, '" class="answer-', i, '">',
+			// 			'<input',
+			// 				' type="', inputType, '"',
+			// 				' name="', questionId, '"',
+			// 				' id="', answerId, '"',
+			// 				' value="', answer.value, '"',
+			// 				'/>',
+			// 			answer.label,
+			// 		'</label>'
+			// );
+
 			if (typeof answer.otherLabel === 'string') {
 				var textbox = document.createElement("input");
 				textbox.type = 'textbox';
@@ -142,56 +125,64 @@ define([
 				textbox.placeholder = answer.otherLabel;
 				li.appendChild(textbox);
 
-				buf.push(
-					'<input',
-						' type="textbox"',
-						' name="', questionId, '-other"',
-						' id="', answerId, '-other"',
-						' value="', answer.otherValue, '"',
-						' placeholder="', answer.otherLabel, '"',
-						' class="other"',
-						'/>'
-				);
+				// buf.push(
+				// 	'<input',
+				// 		' type="textbox"',
+				// 		' name="', questionId, '-other"',
+				// 		' id="', answerId, '-other"',
+				// 		' value="', answer.otherValue, '"',
+				// 		' placeholder="', answer.otherLabel, '"',
+				// 		' class="other"',
+				// 		'/>'
+				// );
 			}
-			buf.push(
-				'</li>'
-			);
+			// buf.push(
+			// 	'</li>'
+			// );
 			ul.appendChild(li);
 		}
 
-		buf.push(
-				'</ul>',
-			'</fieldset>'
-		);
+		// buf.push(
+		// 		'</ul>',
+		// 	'</fieldset>'
+		// );
 
 		fieldset.appendChild(ul);
-		answerFragment.appendChild(fieldset);
 
-		this._answers.innerHTML = buf.join('');
+		// this._answers.innerHTML = buf.join('');
 
 		// Keep track of answers with array of answer objects.
-		for (i=0, len=answers.length; i<len; i++) {
-			answer = answers[i];
-			answerList.push({
-				option: answer,
-				input: this._answers.querySelector('.answer-' + i + ' > input'),
-				otherInput: this._answers.querySelector(
-						'.answer-' + i + '-other > input')
-			});
-		}
+		// for (i=0, len=answers.length; i<len; i++) {
+		// 	answer = answers[i];
+		// 	answerList.push({
+		// 		option: answer,
+		// 		input: this._answers.querySelector('.answer-' + i + ' > input'),
+		// 		otherInput: this._answers.querySelector(
+		// 				'.answer-' + i + '-other > input')
+		// 	});
+		// }
 
 		// Bind and add event listeners to all inputs
 		this._onChange = this._onChange.bind(this);
 		this._onBlur = this._onBlur.bind(this);
 
-		for (i=0, len=answerList.length; i<len; i++) {
-			answerList[i].input.addEventListener('change', this._onChange);
-			if (answerList[i].otherInput !== null) {
-				answerList[i].otherInput.addEventListener('blur', this._onBlur);
+		// for (i=0, len=answerList.length; i<len; i++) {
+		// 	answerList[i].input.addEventListener('change', this._onChange);
+		// 	if (answerList[i].otherInput !== null) {
+		// 		answerList[i].otherInput.addEventListener('blur', this._onBlur);
+		// 	}
+		// }
+
+		var listItems = fieldset.getElementsByTagName('li');
+		for (var i=0, len=listItems.length; i<len; i++) {
+			var inputs = listItems[i].getElementsByTagName('input')
+			inputs[0].addEventListener('change', this._onChange);
+			if (inputs[1] !== undefined) {
+				inputs[1].addEventListener('blur', this._onBlur);
 			}
 		}
 
-		return answerFragment;
+		return fieldset;
 	};
 
 	/**

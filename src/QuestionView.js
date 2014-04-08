@@ -53,6 +53,7 @@ define([
 
 		this.setAnswer(this._options.selectedAnswer);
 
+		this.el.innerHTML = "";
 		this.el.appendChild(section);
 	};
 
@@ -68,112 +69,28 @@ define([
 		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
 		    answers = options.answers,
 		    answer,
-		    answerList = this._answerList,
 		    questionId = 'question-' + (++ID_SEQUENCE),
 		    answerId,
-		    buf = [];
+		    answerList = document.createElement("fieldset"),
+		    legend = document.createElement("legend"),
+		    ul = document.createElement("ul"),
+		    i,
+		    len;
 
-		var fieldset = document.createElement("fieldset");
-		fieldset.name = questionId;
-		var legend = document.createElement("legend");
-		fieldset.appendChild(legend);
-		var ul = document.createElement("ul");
+		answerList.name = questionId;
+		legend.textContent = options.label;
+		answerList.appendChild(legend);
 
-		// buf.push(
-		// 	'<fieldset name="', questionId ,'">',
-		// 		'<legend>',
-		// 			this._options.label,
-		// 		'</legend>',
-		// 		'<ul>'
-		// );
-		for (var i=0, len=answers.length; i<len; i++) {
-			answer = answers[i];
-			answerId = 'answer-' + (++ID_SEQUENCE);
-
-			var li = document.createElement("li");
-			var label = document.createElement("label");
-			label.for = answerId;
-			label.classList.add("answer");
-			var input = document.createElement("input");
-			input.type = inputType;
-			input.name = questionId;
-			input.id = answerId;
-			input.value = answer.value;
-			label.appendChild(input);
-			li.appendChild(label);
-
-			// buf.push(
-			// 	'<li>',
-			// 		'<label for="', answerId, '" class="answer-', i, '">',
-			// 			'<input',
-			// 				' type="', inputType, '"',
-			// 				' name="', questionId, '"',
-			// 				' id="', answerId, '"',
-			// 				' value="', answer.value, '"',
-			// 				'/>',
-			// 			answer.label,
-			// 		'</label>'
-			// );
-
-			if (typeof answer.otherLabel === 'string') {
-				var textbox = document.createElement("input");
-				textbox.type = 'textbox';
-				textbox.name = questionId+'-other';
-				textbox.id = answerId+'-other';
-				textbox.value = answer.otherValue;
-				textbox.classList.add("other");
-				textbox.placeholder = answer.otherLabel;
-				li.appendChild(textbox);
-
-				// buf.push(
-				// 	'<input',
-				// 		' type="textbox"',
-				// 		' name="', questionId, '-other"',
-				// 		' id="', answerId, '-other"',
-				// 		' value="', answer.otherValue, '"',
-				// 		' placeholder="', answer.otherLabel, '"',
-				// 		' class="other"',
-				// 		'/>'
-				// );
-			}
-			// buf.push(
-			// 	'</li>'
-			// );
-			ul.appendChild(li);
+		for (i=0, len=answers.length; i<len; i++) {
+			this._addAnswer(answers[i], inputType, questionId, ul);
 		}
-
-		// buf.push(
-		// 		'</ul>',
-		// 	'</fieldset>'
-		// );
-
-		fieldset.appendChild(ul);
-
-		// this._answers.innerHTML = buf.join('');
-
-		// Keep track of answers with array of answer objects.
-		// for (i=0, len=answers.length; i<len; i++) {
-		// 	answer = answers[i];
-		// 	answerList.push({
-		// 		option: answer,
-		// 		input: this._answers.querySelector('.answer-' + i + ' > input'),
-		// 		otherInput: this._answers.querySelector(
-		// 				'.answer-' + i + '-other > input')
-		// 	});
-		// }
+		answerList.appendChild(ul);
 
 		// Bind and add event listeners to all inputs
 		this._onChange = this._onChange.bind(this);
 		this._onBlur = this._onBlur.bind(this);
 
-		// for (i=0, len=answerList.length; i<len; i++) {
-		// 	answerList[i].input.addEventListener('change', this._onChange);
-		// 	if (answerList[i].otherInput !== null) {
-		// 		answerList[i].otherInput.addEventListener('blur', this._onBlur);
-		// 	}
-		// }
-
-		var listItems = fieldset.getElementsByTagName('li');
+		var listItems = answerList.getElementsByTagName('li');
 		for (var i=0, len=listItems.length; i<len; i++) {
 			var inputs = listItems[i].getElementsByTagName('input')
 			inputs[0].addEventListener('change', this._onChange);
@@ -182,7 +99,7 @@ define([
 			}
 		}
 
-		return fieldset;
+		return answerList;
 	};
 
 	/**
@@ -192,10 +109,43 @@ define([
 	 *         Contains an answer wrapped in appropriate HTML.
 	 *
 	 */
-	QuestionView.prototype._addAnswer = function () {
+	QuestionView.prototype._addAnswer = function (answer, inputType, qId, ul) {
+		// answer = answers[i];
+		var answerId = 'answer-' + (++ID_SEQUENCE),
+		    li = document.createElement("li"),
+		    label = document.createElement("label"),
+		    input = document.createElement("input"),
+		    answerText = document.createTextNode(answer.label);
 
+		label.for = answerId;
+		label.classList.add("answer");
+
+		input.type = inputType;
+		input.name = qId;
+		input.id = answerId;
+		input.value = answer.value;
+
+		label.appendChild(input);
+		label.appendChild(answerText);
+
+		li.appendChild(label);
+
+		if (typeof answer.otherLabel === 'string') {
+			var textbox = document.createElement("input");
+			textbox.type = 'textbox';
+			textbox.name = qId + '-other';
+			textbox.id = answerId + '-other';
+			textbox.value = answer.otherValue;
+			textbox.classList.add("other");
+			textbox.placeholder = answer.otherLabel;
+			li.appendChild(textbox);
+		}
+		ul.appendChild(li);
 	}
 
+	/**
+	 *
+	 */
 	QuestionView.prototype._onChange = function (ev) {
 		var target = ev.target,
 		    answerList = this._answerList,
@@ -215,6 +165,9 @@ define([
 		this.trigger('change', this);
 	};
 
+	/**
+	 *
+	 */
 	QuestionView.prototype._onBlur = function (ev) {
 		var target = ev.target,
 		    answerList = this._answerList,

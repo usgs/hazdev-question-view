@@ -206,6 +206,27 @@ define([
 	// ----------------------------------------------------------------------
 
 	/**
+	 * Clear all answers.
+	 *       Uncheck all check boxes and radio buttons.
+	 *       Disable all text boxes for "other" fields.
+	 */
+	QuestionView.prototype.clearAnswers = function () {
+		var answerList = this._answerList,
+		    answerElement = answerList.getElementsByTagName('li'),
+		    i,
+		    len = answerElement.length;
+
+		for (i=0; i<len; i++) {
+			var inputs = answerElement[i].getElementsByTagName('input')
+			inputs[0].checked = false;
+			// If there is an "other" input textbox
+			if (inputs[1] !== undefined) {
+				inputs[1].disabled = true;
+			}
+		}
+	}
+
+	/**
 	 * Clean up event listeners, remove list of answers
 	 *
 	 */
@@ -236,18 +257,20 @@ define([
 	 */
 	QuestionView.prototype.getAnswer = function () {
 		var options = this._options,
-		    answer,
+		    answer = options.answers,
 		    currentAnswer = [],
 		    answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
 		    i,
 		    len = answerElement.length;
-
+    // TODO, this not working
 		for (i=0; i<len; i++) {
 			var inputs = answerElement[i].getElementsByTagName('input')
-			if (inputs.checked) {
+			// console.log(inputs[0].checked);
+			if (inputs[0].checked) {
+				// console.log(answer[i]);
 				currentAnswer.push(
-					answer.option
+					answer[i]
 				);
 			}
 		}
@@ -272,6 +295,7 @@ define([
 	QuestionView.prototype.setAnswer = function (selectedAnswer) {
 		var options = this._options,
 		    answerList = this._answerList,
+		    answerElement = answerList.getElementsByTagName('li'),
 		    multiSelect = options.multiSelect,
 		    checked,
 		    answer,
@@ -279,24 +303,12 @@ define([
 		    i,
 		    j,
 		    k,
-		    len = answerList.length,
+		    len = answerElement.length,
 		    len2,
 		    index = {};
 
-		// console.log('setAnswer');
-		// console.log(answerList.length);
 		// Make sure everything is unchecked first
-		for (k=0; k<len; k++) {
-			// console.log(answerList[k]);
-			answerList[k].input.checked=false;
-			// console.log('unchecking');
-			if (answerList[k].otherInput) {
-				answerList[k].otherInput.disabled=true;
-				// console.log('dsabling');
-			}
-
-			index[answerList[k].value]=k;
-		}
+		this.clearAnswers();
 
 		if (selectedAnswer === null) {
 			return;

@@ -144,6 +144,7 @@ define([
 
 	/**
 	 * Event listener for "other" inputs.
+	 * Radio buttons & check boxes.
 	 *       Enable or disable text boxes associated with "other".
 	 *       Put focus in text box when associated radio/checkbox is selected.
 	 *
@@ -172,18 +173,24 @@ define([
 	};
 
 	/**
+	 * Event listener for "other" inputs.
+	 * Text boxes.
+	 *      If the value in the text box changes, save the change.
 	 *
 	 */
 	QuestionView.prototype._onBlur = function (ev) {
 		var target = ev.target,
+				answers = this._options.answers,
 		    answerList = this._answerList,
+		    answerElement = answerList.getElementsByTagName('li'),
 		    i,
 		    len;
 
-		for (i=0, len=answerList.length; i<len; i++) {
-			if (answerList[i].otherInput === target) {
-				if (answerList[i].option.otherValue !== target.value) {
-					answerList[i].option.otherValue = target.value;
+		for (i=0, len=answerElement.length; i<len; i++) {
+			var inputs = answerElement[i].getElementsByTagName('input')
+			if (inputs[1] === target) {
+				if (answers[i].otherValue !== target.value) {
+					answers[i].otherValue = target.value;
 					this.trigger('change', this);
 				}
 				break;

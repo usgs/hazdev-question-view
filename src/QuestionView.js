@@ -209,8 +209,9 @@ define([
 	 * Clear all answers.
 	 *       Uncheck all check boxes and radio buttons.
 	 *       Disable all text boxes for "other" fields.
+	 *       Also indexes all answer for faster future lookup.
 	 */
-	QuestionView.prototype.clearAnswers = function () {
+	QuestionView.prototype.clearAnswers = function (index) {
 		var answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
 		    i,
@@ -223,7 +224,10 @@ define([
 			if (inputs[1] !== undefined) {
 				inputs[1].disabled = true;
 			}
+			index[inputs[0].value] = i;
 		}
+
+		return index;
 	}
 
 	/**
@@ -308,7 +312,8 @@ define([
 		    index = {};
 
 		// Make sure everything is unchecked first
-		this.clearAnswers();
+		index = this.clearAnswers(index);
+		console.log(index);
 
 		if (selectedAnswer === null) {
 			return;

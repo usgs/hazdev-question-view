@@ -66,11 +66,9 @@ define([
 	 */
 	QuestionView.prototype._addAnswers = function () {
 		var options = this._options,
-		    inputType = (options.multiSelect ? 'checkbox' : 'radio'),
 		    answers = options.answers,
-		    answer,
+		    answerElement,
 		    questionId = 'question-' + (++ID_SEQUENCE),
-		    answerId,
 		    answerList = document.createElement("fieldset"),
 		    legend = document.createElement("legend"),
 		    ul = document.createElement("ul"),
@@ -82,7 +80,7 @@ define([
 		answerList.appendChild(legend);
 
 		for (i=0, len=answers.length; i<len; i++) {
-			this._addAnswer(answers[i], inputType, questionId, ul);
+			this._addAnswer(answers[i], questionId, ul);
 		}
 		answerList.appendChild(ul);
 
@@ -90,9 +88,9 @@ define([
 		this._onChange = this._onChange.bind(this);
 		this._onBlur = this._onBlur.bind(this);
 
-		var listItems = answerList.getElementsByTagName('li');
-		for (var i=0, len=listItems.length; i<len; i++) {
-			var inputs = listItems[i].getElementsByTagName('input')
+		answerElement = answerList.getElementsByTagName('li');
+		for (i=0, len=answerElement.length; i<len; i++) {
+			var inputs = answerElement[i].getElementsByTagName('input')
 			inputs[0].addEventListener('change', this._onChange);
 			if (inputs[1] !== undefined) {
 				inputs[1].addEventListener('blur', this._onBlur);
@@ -109,9 +107,9 @@ define([
 	 *         Contains an answer wrapped in appropriate HTML.
 	 *
 	 */
-	QuestionView.prototype._addAnswer = function (answer, inputType, qId, ul) {
-		// answer = answers[i];
+	QuestionView.prototype._addAnswer = function (answer, qId, ul) {
 		var answerId = 'answer-' + (++ID_SEQUENCE),
+				inputType = (this._options.multiSelect ? 'checkbox' : 'radio'),
 		    li = document.createElement("li"),
 		    label = document.createElement("label"),
 		    input = document.createElement("input"),

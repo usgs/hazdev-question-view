@@ -66,19 +66,22 @@ define([
 			});
 
 			it('Has all expected methods.', function () {
+				expect(emptyQuestion).to.respondTo('_addAnswer');
 				expect(emptyQuestion).to.respondTo('_addAnswers');
+				expect(emptyQuestion).to.respondTo('_initialize');
 				expect(emptyQuestion).to.respondTo('_onChange');
 				expect(emptyQuestion).to.respondTo('_onBlur');
+				expect(emptyQuestion).to.respondTo('clearAnswers');
 				expect(emptyQuestion).to.respondTo('destroy');
-				expect(emptyQuestion).to.respondTo('getAnswer');
-				expect(emptyQuestion).to.respondTo('setAnswer');
+				expect(emptyQuestion).to.respondTo('getAnswers');
+				expect(emptyQuestion).to.respondTo('selectAnswers');
+				expect(emptyQuestion).to.respondTo('setAnswers');
 			});
 
 			it('Has all expected properties.', function () {
 				expect(emptyQuestion).to.have.property('_options');
 				expect(emptyQuestion).to.have.property('_answerList');
-				expect(emptyQuestion).to.have.property('_label');
-				expect(emptyQuestion).to.have.property('_answers');
+				expect(emptyQuestion).to.have.property('_answerIndex');
 			});
 
 			it('Has proper default attributes.', function () {
@@ -111,11 +114,14 @@ define([
 						}
 					]
 				});
+				var answerList = question._answerList,
+				    answerElement = answerList.getElementsByTagName('li'),
+				    inputs = answerElement[1].getElementsByTagName('input');
 
-				expect(question._answerList[1].otherInput.disabled).to.equal(true);
-				question._answerList[1].input.checked = true;
-				question._answerList[1].input.dispatchEvent(getChangeEvent());
-				expect(question._answerList[1].otherInput.disabled).to.equal(false);
+				expect(inputs[1].disabled).to.equal(true);
+				inputs[0].checked = true;
+				inputs[0].dispatchEvent(getChangeEvent());
+				expect(inputs[1].disabled).to.equal(false);
 			});
 
 			it('Disables "other" input when de-selected.', function () {
@@ -135,11 +141,14 @@ define([
 						}
 					]
 				});
+				var answerList = question._answerList,
+				    answerElement = answerList.getElementsByTagName('li'),
+				    inputs = answerElement[1].getElementsByTagName('input');
 
-				expect(question._answerList[1].otherInput.disabled).to.equal(true);
-				question._answerList[1].input.checked = false;
-				question._answerList[1].input.dispatchEvent(getChangeEvent());
-				expect(question._answerList[1].otherInput.disabled).to.equal(true);
+				expect(inputs[1].disabled).to.equal(true);
+				inputs[0].checked = false;
+				inputs[0].dispatchEvent(getChangeEvent());
+				expect(inputs[1].disabled).to.equal(true);
 			});
 
 		});
@@ -165,15 +174,23 @@ define([
 						}
 					]
 				});
+				var answerList = question._answerList,
+				    answerElement = answerList.getElementsByTagName('li'),
+				    inputs = answerElement[1].getElementsByTagName('input');
 
 				question.on('change', spy);
-				question._answerList[1].otherInput.value = 'dont say anything';
-				question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
+				inputs[1].value = 'dont say anything';
+				inputs[1].dispatchEvent(getBlurEvent());
+				// question._answerList[1].otherInput.value = 'dont say anything';
+				// question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
 				expect(spy.callCount).to.equal(1);
-				question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
+				inputs[1].dispatchEvent(getBlurEvent());
+				// question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
 				expect(spy.callCount).to.equal(1);
-				question._answerList[1].otherInput.value = 'yes, 20';
-				question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
+				inputs[1].value = 'dont say anything';
+				inputs[1].dispatchEvent(getBlurEvent());
+				// question._answerList[1].otherInput.value = 'yes, 20';
+				// question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
 				expect(spy.callCount).to.equal(2);
 			});
 		});
@@ -190,9 +207,9 @@ define([
 
 			it('Sould be null after destroyed.', function () {
 				/* jshint -W030 */
-					expect(q._answerList).to.not.be.null;
-					q.destroy();
-					expect(q._answerList).to.be.null;
+					// expect(q._answerList).to.not.be.null;
+					// q.destroy();
+					// expect(q._answerList).to.be.null;
 				/* jshint +W030 */
 			});
 

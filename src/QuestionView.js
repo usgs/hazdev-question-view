@@ -38,7 +38,6 @@ define([
 			'QuestionView source: https://github.com/usgs/hazdev-question-view'
 		);*/
 		this._options = Util.extend({}, DEFAULTS, options || {});
-		// this._answerList = [];
 		this._answerIndex = [];
 
 		View.call(this, this._options);
@@ -52,7 +51,7 @@ define([
 
 		section.appendChild(this._addAnswers());
 
-		this.setAnswer(this._options.selectedAnswer);
+		this.setAnswers(this._options.selectedAnswer);
 
 		this.el.innerHTML = "";
 		this.el.appendChild(section);
@@ -330,7 +329,7 @@ define([
 	 * @param {String|Array}
 	 *        The list of currently selected answers as strings
 	 */
-	QuestionView.prototype.setAnswer = function (selectedAnswer) {
+	QuestionView.prototype.setAnswers = function (selectedAnswer) {
 		var answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
 		    answer,

@@ -234,8 +234,9 @@ define([
 			inputs = answer.getElementsByTagName('input');
 			if (inputs[0]) {
 				inputs[0].checked = true;
-				if (answer.otherInput) {
-					answer.otherInput.disabled=false;
+				// If there is an "other" input textbox
+				if (inputs[1] !== undefined) {
+					inputs[1].disabled = false;
 				}
 			}
 		}

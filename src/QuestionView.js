@@ -53,7 +53,7 @@ define([
 
 		this.setAnswers(this._options.selectedAnswer);
 
-		this.el.innerHTML = "";
+		this.el.innerHTML = '';
 		this.el.appendChild(section);
 
 		this.getAnswer(); // TODO remove after testing
@@ -108,7 +108,7 @@ define([
 
 		answerElement = answerList.getElementsByTagName('li');
 		for (i=0, len=answerElement.length; i<len; i++) {
-			var inputs = answerElement[i].getElementsByTagName('input')
+			var inputs = answerElement[i].getElementsByTagName('input');
 			inputs[0].addEventListener('change', this._onChange);
 			if (inputs[1] !== undefined) {
 				inputs[1].addEventListener('blur', this._onBlur);
@@ -128,13 +128,13 @@ define([
 	QuestionView.prototype._addAnswer = function (answer, qId, ul) {
 		var answerId = 'answer-' + (++ID_SEQUENCE),
 				inputType = (this._options.multiSelect ? 'checkbox' : 'radio'),
-		    li = document.createElement("li"),
-		    label = document.createElement("label"),
-		    input = document.createElement("input"),
+		    li = document.createElement('li'),
+		    label = document.createElement('label'),
+		    input = document.createElement('input'),
 		    answerText = document.createTextNode(answer.label);
 
 		label.for = answerId;
-		label.classList.add("answer");
+		label.classList.add('answer');
 
 		input.type = inputType;
 		input.name = qId;
@@ -147,17 +147,17 @@ define([
 		li.appendChild(label);
 
 		if (typeof answer.otherLabel === 'string') {
-			var textbox = document.createElement("input");
+			var textbox = document.createElement('input');
 			textbox.type = 'textbox';
 			textbox.name = qId + '-other';
 			textbox.id = answerId + '-other';
 			textbox.value = answer.otherValue;
-			textbox.classList.add("other");
+			textbox.classList.add('other');
 			textbox.placeholder = answer.otherLabel;
 			li.appendChild(textbox);
 		}
 		ul.appendChild(li);
-	}
+	};
 
 	/**
 	 * Event listener for "other" inputs.
@@ -175,7 +175,7 @@ define([
 		    checked;
 
 		for (i=0; i<len; i++) {
-			var inputs = answerElement[i].getElementsByTagName('input')
+			var inputs = answerElement[i].getElementsByTagName('input');
 			// If there is an "other" input textbox
 			if (inputs[1] !== undefined) {
 				checked = inputs[0].checked;
@@ -204,7 +204,7 @@ define([
 		    len = answerElement.length;
 
 		for (i=0; i<len; i++) {
-			var inputs = answerElement[i].getElementsByTagName('input')
+			var inputs = answerElement[i].getElementsByTagName('input');
 			if (inputs[1] === target) {
 				if (answers[i].otherValue !== target.value) {
 					answers[i].otherValue = target.value;
@@ -240,7 +240,7 @@ define([
 				}
 			}
 		}
-	}
+	};
 
 	/**
 	 * Clear all answers.
@@ -254,14 +254,14 @@ define([
 		    len = answerElement.length;
 
 		for (i=0; i<len; i++) {
-			var inputs = answerElement[i].getElementsByTagName('input')
+			var inputs = answerElement[i].getElementsByTagName('input');
 			inputs[0].checked = false;
 			// If there is an "other" input textbox
 			if (inputs[1] !== undefined) {
 				inputs[1].disabled = true;
 			}
 		}
-	}
+	};
 
 	/**
 	 * Clean up event listeners, remove list of answers
@@ -302,7 +302,7 @@ define([
 		    len = answerElement.length;
     // TODO, this not working
 		for (i=0; i<len; i++) {
-			var inputs = answerElement[i].getElementsByTagName('input')
+			var inputs = answerElement[i].getElementsByTagName('input');
 			// console.log(inputs[0].checked);
 			if (inputs[0].checked) {
 				// console.log(answer[i]);

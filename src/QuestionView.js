@@ -222,11 +222,10 @@ define([
 
 	/**
 	 * Sets input.checked on input elements.
-	 * Assumes a string for the value of a single answer if multiSelect:false
-	 * Assumes an array of answer values if multiSelect:true
+	 * Assumes a string for the "value" of a single answer.
 	 *
-	 * @param {String|Array}
-	 *        The list of currently selected answers as strings
+	 * @param {String}
+	 *        The "value" of the selected answer.
 	 */
 	QuestionView.prototype.selectAnswers = function (answer) {
 		var inputs;
@@ -322,12 +321,15 @@ define([
 	};
 
 	/**
-	 * Sets input.checked on input elements.
+	 * Finds all of the selected answers.
+	 * Calls selectAnswer with each of them.
+	 *
 	 * Assumes a string for the value of a single answer if multiSelect:false
 	 * Assumes an array of answer values if multiSelect:true
 	 *
 	 * @param {String|Array}
-	 *        The list of currently selected answers as strings
+	 *        A string containing the "value" of the selected answer.
+	 *        The list of currently selected answers as strings.
 	 */
 	QuestionView.prototype.setAnswers = function (selectedAnswer) {
 		var answerList = this._answerList,

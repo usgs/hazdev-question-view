@@ -55,8 +55,6 @@ define([
 
 		this.el.innerHTML = '';
 		this.el.appendChild(section);
-
-		this.getAnswer(); // TODO remove after testing
 	};
 
 	/**
@@ -271,7 +269,7 @@ define([
 	 *         An object containing a single answer if only 1 is selected
 	 *         An array of answer objects if there is more than 1
 	 */
-	QuestionView.prototype.getAnswer = function () {
+	QuestionView.prototype.getAnswers = function () {
 		var options = this._options,
 		    answer = options.answers,
 		    currentAnswer = [],

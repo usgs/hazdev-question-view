@@ -220,27 +220,6 @@ define([
 	// Public Methods
 	// ----------------------------------------------------------------------
 
-	/**
-	 * Sets input.checked on input elements.
-	 * Assumes a string for the "value" of a single answer.
-	 *
-	 * @param {String}
-	 *        The "value" of the selected answer.
-	 */
-	QuestionView.prototype.selectAnswers = function (answer) {
-		var inputs;
-
-		if (typeof answer !== 'undefined') {
-			inputs = answer.getElementsByTagName('input');
-			if (inputs[0]) {
-				inputs[0].checked = true;
-				// If there is an "other" input textbox
-				if (inputs[1] !== undefined) {
-					inputs[1].disabled = false;
-				}
-			}
-		}
-	};
 
 	/**
 	 * Clear all answers.
@@ -318,6 +297,28 @@ define([
 			return currentAnswer;
 		} else {
 			return currentAnswer[0];
+		}
+	};
+
+	/**
+	 * Sets input.checked on input elements.
+	 * Assumes a string for the "value" of a single answer.
+	 *
+	 * @param {String}
+	 *        The "value" of the selected answer.
+	 */
+	QuestionView.prototype.selectAnswers = function (answer) {
+		var inputs;
+
+		if (typeof answer !== 'undefined') {
+			inputs = answer.getElementsByTagName('input');
+			if (inputs[0]) {
+				inputs[0].checked = true;
+				// If there is an "other" input textbox
+				if (inputs[1] !== undefined) {
+					inputs[1].disabled = false;
+				}
+			}
 		}
 	};
 

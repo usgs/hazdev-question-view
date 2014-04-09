@@ -38,7 +38,8 @@ define([
 			'QuestionView source: https://github.com/usgs/hazdev-question-view'
 		);*/
 		this._options = Util.extend({}, DEFAULTS, options || {});
-		this._answerList = [];
+		// this._answerList = [];
+		this._answerIndex = [];
 
 		View.call(this, this._options);
 	};
@@ -46,8 +47,8 @@ define([
 	QuestionView.prototype = Object.create(View.prototype);
 
 	QuestionView.prototype._initialize = function () {
-		var section = document.createElement("section");
-		section.classList.add("question");
+		var section = document.createElement('section');
+		section.classList.add('question');
 
 		section.appendChild(this._addAnswers());
 
@@ -71,9 +72,11 @@ define([
 		    answers = options.answers,
 		    answerElement,
 		    questionId = 'question-' + (++ID_SEQUENCE),
-		    answerList = document.createElement("fieldset"),
-		    legend = document.createElement("legend"),
-		    ul = document.createElement("ul"),
+		    answerList = document.createElement('fieldset'),
+		    legend = document.createElement('legend'),
+		    ul = document.createElement('ul'),
+		    answerIndex = this._answerIndex,
+		    answer,
 		    i,
 		    len;
 
@@ -87,7 +90,20 @@ define([
 		answerList.appendChild(ul);
 		this._answerList = answerList;
 
-		// Bind and add event listeners to all inputs
+		// Keep track of answers with array of answer objects.
+		for (i=0, len=answers.length; i<len; i++) {
+			answer = answers[i];
+			// answerIndex.push({
+				// option: answer
+				// input: this._answers.querySelector('.answer-' + i + ' > input'),
+				// otherInput: this._answers.querySelector(
+				// 		'.answer-' + i + '-other > input')
+			// });
+			answerIndex[answer.value] = i;
+		}
+		// if this doesn't work push answerId on to querySelector by id
+
+		// Bind and add event listeners to all inputs.
 		this._onChange = this._onChange.bind(this);
 		this._onBlur = this._onBlur.bind(this);
 
@@ -206,6 +222,28 @@ define([
 	// ----------------------------------------------------------------------
 
 	/**
+	 * Sets input.checked on input elements.
+	 * Assumes a string for the value of a single answer if multiSelect:false
+	 * Assumes an array of answer values if multiSelect:true
+	 *
+	 * @param {String|Array}
+	 *        The list of currently selected answers as strings
+	 */
+	QuestionView.prototype.selectAnswers = function (answer) {
+		var inputs;
+
+		if (typeof answer !== 'undefined') {
+			inputs = answer.getElementsByTagName('input');
+			if (inputs[0]) {
+				inputs[0].checked = true;
+				if (answer.otherInput) {
+					answer.otherInput.disabled=false;
+				}
+			}
+		}
+	}
+
+	/**
 	 * Clear all answers.
 	 *       Uncheck all check boxes and radio buttons.
 	 *       Disable all text boxes for "other" fields.
@@ -226,8 +264,6 @@ define([
 			}
 			index[inputs[0].value] = i;
 		}
-
-		return index;
 	}
 
 	/**
@@ -297,77 +333,30 @@ define([
 	 *        The list of currently selected answers as strings
 	 */
 	QuestionView.prototype.setAnswer = function (selectedAnswer) {
-		var options = this._options,
-		    answerList = this._answerList,
+		var answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
-		    multiSelect = options.multiSelect,
-		    checked,
 		    answer,
-		    answerIndex,
+		    answerIndex = this._answerIndex,
 		    i,
-		    j,
-		    k,
-		    len = answerElement.length,
-		    len2,
+		    len,
 		    index = {};
 
 		// Make sure everything is unchecked first
-		index = this.clearAnswers(index);
-		console.log(index);
+		this.clearAnswers(index);
 
 		if (selectedAnswer === null) {
 			return;
 		}
 
 		if (typeof selectedAnswer === 'string') {
-			answerIndex = index[selectedAnswer];
-			if (typeof answerIndex !== 'undefined') {
-				answer = answerList[answerIndex];
-				if (answer.input) {
-					answer.input = checked;
-					if (answer.otherInput) {
-						answer.otherInput.disabled=false;
-					}
-				}
-			}
-		} else {
-			for (j=0, len2=selectedAnswer.length; j<len2; j++) {
-				answerIndex = index[selectedAnswer[j]];
-				if (typeof answerIndex !== 'undefined') {
-					answer = answerList[answerIndex];
-					if (answer.input) {
-						answer.input = checked;
-						if (answer.otherInput) {
-							answer.otherInput.disabled=false;
-						}
-					}
-				}
+			answer = answerElement[answerIndex[selectedAnswer]];
+			this.selectAnswers(answer);
+		} else {  // Array of strings
+			for (i=0, len=selectedAnswer.length; i<len; i++) {
+				answer = answerElement[answerIndex[selectedAnswer[i]]];
+				this.selectAnswers(answer);
 			}
 		}
-
-		// for (var i=0; i<len; i++) {
-		// 	var answer = answerList[i];
-
-		// 	if (multiSelect) { // Check boxes
-		// 		checked = false;
-		// 		if (selectedAnswer !== null) {
-		// 			for (var j=0, len2=selectedAnswer.length; j<len2; j++) {
-		// 				if (selectedAnswer[j] === answer.option.value){
-		// 					checked = true;
-		// 					break;
-		// 				}
-		// 			}
-		// /*			answerList[index[selectedAnswer]].input = checked;
-		// 		}
-		// 	} else {           // Radio buttons
-		// 		checked = (selectedAnswer === answer.option.value);
-		// 	}
-
-			// answer.input.checked=checked;
-			// if (answer.otherInput !== null) {
-			// 	answer.otherInput.disabled = !checked;
-			// }
-		// }
 	};
 
 	return QuestionView;

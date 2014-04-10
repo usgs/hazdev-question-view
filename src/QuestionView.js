@@ -151,7 +151,7 @@ define([
 
 		if (typeof answer.otherLabel === 'string') {
 			var textbox = document.createElement('input');
-			textbox.type = 'textbox';
+			textbox.type = 'text';
 			textbox.name = qId + '-other';
 			textbox.id = answerId + '-other';
 			textbox.value = answer.otherValue;

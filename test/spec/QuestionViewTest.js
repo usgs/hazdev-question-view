@@ -181,16 +181,13 @@ define([
 				question.on('change', spy);
 				inputs[1].value = 'dont say anything';
 				inputs[1].dispatchEvent(getBlurEvent());
-				// question._answerList[1].otherInput.value = 'dont say anything';
-				// question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
 				expect(spy.callCount).to.equal(1);
+
 				inputs[1].dispatchEvent(getBlurEvent());
-				// question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
 				expect(spy.callCount).to.equal(1);
-				inputs[1].value = 'dont say anything';
+
+				inputs[1].value = 'yes, 20';
 				inputs[1].dispatchEvent(getBlurEvent());
-				// question._answerList[1].otherInput.value = 'yes, 20';
-				// question._answerList[1].otherInput.dispatchEvent(getBlurEvent());
 				expect(spy.callCount).to.equal(2);
 			});
 		});
@@ -207,10 +204,9 @@ define([
 
 			it('Sould be null after destroyed.', function () {
 				/* jshint -W030 */
-					// expect(q._answerList).to.not.be.null;
-					// q.destroy();
-					// expect(q._answerList).to.be.null;
-				/* jshint +W030 */
+					expect(q._answerList).to.not.be.null;
+					q.destroy();
+					expect(q._answerList).to.be.null;
 			});
 
 		});

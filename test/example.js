@@ -17,7 +17,7 @@ require([
 	// Callback function for question change events
 	var onQuestionChange = function (question) {
 		console.log('question has changed');
-		console.log(question.getAnswer());
+		console.log(question.getAnswers());
 	};
 
 /*

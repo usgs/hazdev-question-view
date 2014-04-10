@@ -253,15 +253,16 @@ define([
 		    i,
 		    len = answerElement.length;
 
-		for (i=0; i<len; i++) {
-			answerList[i].input.removeEventListener('change', this._onChange);
-			answerList[i].input = null;
-			if (answerList[i].otherInput !== null) {
-				answerList[i].otherInput.removeEventListener('blur', this._onBlur);
-				answerList[i].otherInput = null;
-			}
-		}
 		this._answerList = null;
+		for (i=0; i<len; i++) {
+			var inputs = answerElement[i].getElementsByTagName('input');
+			inputs[0].removeEventListener('change', this._onChange);
+			if (inputs[1] !== undefined) {
+				inputs[1].removeEventListener('blur', this._onBlur);
+			}
+			inputs = null;
+		}
+		answerElement = null;
 	};
 
 	/**

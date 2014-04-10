@@ -55,6 +55,8 @@ define([
 
 		this.el.innerHTML = '';
 		this.el.appendChild(section);
+
+		this.getAnswers();
 	};
 
 	/**
@@ -277,18 +279,31 @@ define([
 		var options = this._options,
 		    answer = options.answers,
 		    currentAnswer = [],
+		    answerIndex = this._answerIndex,
 		    answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
+		    checkedAnswer,
 		    i,
 		    len = answerElement.length;
-    // TODO, this not working
+
 		for (i=0; i<len; i++) {
 			var inputs = answerElement[i].getElementsByTagName('input');
-			// console.log(inputs[0].checked);
 			if (inputs[0].checked) {
-				// console.log(answer[i]);
+				if (inputs[1] !== undefined) {
+					checkedAnswer = {
+						value: inputs[0].value,
+						label: answerElement[i].innerText,
+						otherValue: inputs[1].value,
+						otherLabel: inputs[1].placeholder
+					}
+				} else {
+					checkedAnswer = {
+						value: inputs[0].value,
+						label: answerElement[i].innerText
+					}
+				}
 				currentAnswer.push(
-					answer[i]
+					checkedAnswer
 				);
 			}
 		}

@@ -90,12 +90,7 @@ define([
 		// Keep track of answers with array of answer objects.
 		for (i=0, len=answers.length; i<len; i++) {
 			answer = answers[i];
-			// answerIndex.push({
-				// option: answer
-				// input: this._answers.querySelector('.answer-' + i + ' > input'),
-				// otherInput: this._answers.querySelector(
-				// 		'.answer-' + i + '-other > input')
-			// });
+
 			answerIndex[answer.value] = i;
 		}
 
@@ -184,6 +179,7 @@ define([
 				// If the "other" input checkbox for this textbox is target
 				if (inputs[0] === target && checked) {
 					inputs[1].focus();
+					inputs[1].setSelectionRange(0, inputs[1].value.length);
 				}
 			}
 		}

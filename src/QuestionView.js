@@ -55,8 +55,6 @@ define([
 
 		this.el.innerHTML = '';
 		this.el.appendChild(section);
-
-		this.getAnswers();
 	};
 
 	/**

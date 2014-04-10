@@ -98,7 +98,6 @@ define([
 			// });
 			answerIndex[answer.value] = i;
 		}
-		// if this doesn't work push answerId on to querySelector by id
 
 		// Bind and add event listeners to all inputs.
 		this._onChange = this._onChange.bind(this);
@@ -118,6 +117,10 @@ define([
 
 	/**
 	 * Wrap a single answer in appropriate html.
+	 *
+	 * @param answer {Object}
+	 *        qId {Integer} Unique identifier for the question
+	 *        ul {Document.Element} Container element for the answers
 	 *
 	 * @return String
 	 *         Contains an answer wrapped in appropriate HTML.

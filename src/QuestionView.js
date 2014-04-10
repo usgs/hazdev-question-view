@@ -277,9 +277,7 @@ define([
 	 */
 	QuestionView.prototype.getAnswers = function () {
 		var options = this._options,
-		    answer = options.answers,
 		    currentAnswer = [],
-		    answerIndex = this._answerIndex,
 		    answerList = this._answerList,
 		    answerElement = answerList.getElementsByTagName('li'),
 		    checkedAnswer,
@@ -295,12 +293,12 @@ define([
 						label: answerElement[i].innerText,
 						otherValue: inputs[1].value,
 						otherLabel: inputs[1].placeholder
-					}
+					};
 				} else {
 					checkedAnswer = {
 						value: inputs[0].value,
 						label: answerElement[i].innerText
-					}
+					};
 				}
 				currentAnswer.push(
 					checkedAnswer

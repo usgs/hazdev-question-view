@@ -211,7 +211,7 @@ define([
 
 		});
 
-		describe('getAnswer()', function () {
+		describe('getAnswers()', function () {
 			var question1 = new QuestionView({
 				label:'This one uses an "other" box',
 				multiSelect:false,
@@ -261,21 +261,21 @@ define([
 			});
 
 			it('Returns the appropriate answer, if there is only 1.', function () {
-				expect(question1.getAnswer().value).to.equal('second-answer');
-				expect(question1.getAnswer().label).to.equal('Another answer');
-				expect(question1.getAnswer().otherValue).to.equal('Please specify...');
-				expect(question1.getAnswer().otherLabel).to.equal('Other:');
+				expect(question1.getAnswers().value).to.equal('second-answer');
+				expect(question1.getAnswers().label).to.equal('Another answer');
+				expect(question1.getAnswers().otherValue).to.equal('Please specify...');
+				expect(question1.getAnswers().otherLabel).to.equal('Other:');
 			});
 			it('Returns the appropriate answers, if there are many.', function () {
-				expect(question2.getAnswer()[0].value).to.equal('second-answer');
-				expect(question2.getAnswer()[0].label).to.equal('#2');
-				expect(question2.getAnswer()[1].value).to.equal('fourth-answer');
-				expect(question2.getAnswer()[1].label).to.equal('#4');
+				expect(question2.getAnswers()[0].value).to.equal('second-answer');
+				expect(question2.getAnswers()[0].label).to.equal('#2');
+				expect(question2.getAnswers()[1].value).to.equal('fourth-answer');
+				expect(question2.getAnswers()[1].label).to.equal('#4');
 			});
 
 		});
 
-		describe('setAnswer()', function () {
+		describe('setAnswers()', function () {
 			var question1 = new QuestionView({
 				label:'This one uses an "other" box',
 				multiSelect:false,
@@ -321,24 +321,24 @@ define([
 
 			it('Sets an answer.', function () {
 				/* jshint -W030 */
-				expect(question1.getAnswer()).to.be.null;
-				question1.setAnswer('first-answer');
-				expect(question1.getAnswer()).to.not.be.null;
+				expect(question1.getAnswers()).to.be.null;
+				question1.setAnswers('first-answer');
+				expect(question1.getAnswers()).to.not.be.null;
 				/* jshint +W030 */
-				expect(question1.getAnswer().value).to.equal('first-answer');
-				expect(question1.getAnswer().label).to.equal('Some answer');
+				expect(question1.getAnswers().value).to.equal('first-answer');
+				expect(question1.getAnswers().label).to.equal('Some answer');
 			});
 
 			it('Sets multiple answers.', function () {
 				/* jshint -W030 */
-				expect(question2.getAnswer()).to.be.null;
-				question2.setAnswer(['second-answer', 'fourth-answer']);
-				expect(question2.getAnswer()).to.not.be.null;
+				expect(question2.getAnswers()).to.be.null;
+				question2.setAnswers(['second-answer', 'fourth-answer']);
+				expect(question2.getAnswers()).to.not.be.null;
 				/* jshint +W030 */
-				expect(question2.getAnswer()[0].value).to.equal('second-answer');
-				expect(question2.getAnswer()[0].label).to.equal('#2');
-				expect(question2.getAnswer()[1].value).to.equal('fourth-answer');
-				expect(question2.getAnswer()[1].label).to.equal('#4');
+				expect(question2.getAnswers()[0].value).to.equal('second-answer');
+				expect(question2.getAnswers()[0].label).to.equal('#2');
+				expect(question2.getAnswers()[1].value).to.equal('fourth-answer');
+				expect(question2.getAnswers()[1].label).to.equal('#4');
 			});
 
 		});

@@ -1,6 +1,6 @@
 {
   "name": "hazdev-question-view",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "http://earthquake.usgs.gov/",
   "repository": {
     "type": "git",
@@ -8,8 +8,8 @@
   },
   "description": "An insertable question container to support forms.",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Eddie McWhirter",
+    "email": "emcwhirter@usgs.gov"
   },
   "contributors": [],
   "keywords": [

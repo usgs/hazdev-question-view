@@ -53,8 +53,8 @@ define([
 
 		this.setAnswers(this._options.selectedAnswer);
 
-		this.el.innerHTML = '';
-		this.el.appendChild(section);
+		this._el.innerHTML = '';
+		this._el.appendChild(section);
 	};
 
 	/**

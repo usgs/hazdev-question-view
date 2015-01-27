@@ -30,29 +30,24 @@ if (!Function.prototype.bind) {
   };
 }
 
+var config = {
+  chai: require('chai/chai'),
+  connect: require('../gruntconfig/connect'),
+  jshint: require('../gruntconfig/jshint'),
+  mocha_phantomjs: require('../gruntconfig/mocha_phantomjs'),
+  mvc: require('mvc'),
+  sinon: require('sinon/pkg/sinon'),
+  util: require('util'),
+  watch: require('../gruntconfig/watch'),
 
-require.config({
-  baseUrl: '..',
-  paths: {
-    mocha: 'mocha/mocha',
-    chai: 'chai/chai',
-    sinon: 'sinon/pkg/sinon',
-    'mvc': '/hazdev-webutils/src/mvc',
-    'util': '/hazdev-webutils/src/util'
-  },
-  shim: {
-    mocha: {
-      exports: 'mocha'
-    },
-    chai: {
-      deps: ['mocha'],
-      exports: 'chai'
-    },
-    sinon: {
-      exports: 'sinon'
-    }
-  }
-});
+  tasks: [
+    'grunt-contrib-connect',
+    'grunt-contrib-jshint',
+    'grunt-mocha-phantomjs',
+    'grunt-contrib-watch'
+  ]
+};
+
 
 require([
   'mocha',
@@ -74,3 +69,5 @@ require([
     }
   });
 });
+
+module.exports = config;

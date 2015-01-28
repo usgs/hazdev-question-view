@@ -7,7 +7,8 @@ var browserify = {
     browserifyOptions: {
       debug: true,
       paths: [
-        process.cwd() + '/' + config.src
+        process.cwd() + '/' + config.src,
+        process.cwd() + '/node_modules/hazdev-webutils/src'
       ]
     }
   }

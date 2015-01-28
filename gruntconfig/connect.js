@@ -11,10 +11,9 @@ var connect = {
       base: [
         config.build + '/' + config.test,
         config.build + '/' + config.src,
-        config.test,
-        config.src,
-        'node_modules'
       ],
+      livereload: true,
+      open: 'https://localhost:8000',
       port: 8000
     }
   }

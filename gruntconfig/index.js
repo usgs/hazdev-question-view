@@ -2,10 +2,14 @@
 
 var config = {
   browserify: require('./browserify'),
+  clean: require('./clean'),
   compass: require('./compass'),
   connect: require('./connect'),
   copy: require('./copy'),
+  cssmin: require('./cssmin'),
+  htmlmin: require('./htmlmin'),
   jshint: require('./jshint'),
+  uglify: require('./uglify'),
   watch: require('./watch'),
   mocha_phantomjs: require('./mocha_phantomjs'),
 

@@ -11,6 +11,7 @@ var config = {
 
   tasks: [
     'grunt-browserify',
+    'grunt-contrib-clean',
     'grunt-contrib-compass',
     'grunt-contrib-connect',
     'grunt-contrib-copy',

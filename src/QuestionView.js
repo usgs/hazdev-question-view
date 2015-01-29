@@ -8,11 +8,11 @@ var DEFAULTS = {
   label:null,          // The question being asked
   multiSelect:false,   // For radio buttons or checkboxes, radio is default
   selectedAnswer:null, // Any answers that should be selected by default
-  answers:null      // Array of answers, each with attributes:
-                    //  value - The "value" for the input
-                    //  label - The answer to show the user
-                    //  otherValue - optional extra value for more info
-                    //  otherLabel - Question to ask associate with otherValue
+  answers:null        // Array of answers, each with attributes:
+                      //  value - The "value" for the input
+                      //  label - The answer to show the user
+                      //  otherValue - optional extra value for more info
+                      //  otherLabel - Question to ask associate with otherValue
 };
 var ID_SEQUENCE = 0;
 
@@ -30,10 +30,8 @@ var ID_SEQUENCE = 0;
  *        detailed documentation on what can be specified.
  */
 var QuestionView = function (options) {
-  /*console.log(
-    'QuestionView source: https://github.com/usgs/hazdev-question-view'
-  );*/
-  this._options = Util.extend({}, DEFAULTS, options || {});
+  options = Util.extend({}, DEFAULTS, options || {});
+  this._options = options;
   this._answerIndex = [];
 
   View.call(this, this._options);
@@ -52,6 +50,7 @@ QuestionView.prototype._initialize = function () {
   this._el.innerHTML = '';
   this._el.appendChild(section);
 };
+
 
 /**
  * Add all answers to the list of answers.

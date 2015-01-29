@@ -15,6 +15,7 @@ var config = {
     'grunt-contrib-compass',
     'grunt-contrib-connect',
     'grunt-contrib-copy',
+    'grunt-contrib-cssmin',
     'grunt-contrib-jshint',
     'grunt-contrib-watch'
     'grunt-mocha-phantomjs'

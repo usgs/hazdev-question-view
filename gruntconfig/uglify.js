@@ -3,7 +3,7 @@
 var config = require('./config');
 
 var uglify = {
-  dist: {
+  build: {
     files: {}
   }
 };

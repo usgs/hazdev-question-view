@@ -3,9 +3,18 @@
 var config = require('./config');
 
 var copy = {
-  dev: {
-    src: 'src/*',
-    dest: config.build + '/'
+  example: {
+    expand: true,
+    cwd: config.example,
+    src: ['*.html', '*.js'],
+    dest: config.build + '/' + config.example
+  },
+
+  test: {
+    expand: true,
+    cwd: config.test,
+    src: ['*.html', '*.js'],
+    dest: config.build + '/' + config.test
   },
 
   mocha: {

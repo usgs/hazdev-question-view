@@ -13,13 +13,34 @@ var watch = {
   },
   html: {
     files: [
-      config.example + '/**/*.html',
-      config.test + '/**/*.html'
+      config.example + '/*.html',
+      config.test + '/*.html'
     ],
     tasks: [ 'copy:example', 'copy:test']
   },
+  scss: {
+    files: [
+      config.src + '/**/*.scss',
+      config.test + '/**/*.scss'
+    ],
+    tasks: [
+      'compass:dev',
+      'compass:test'
+    ]
+  },
+  reload: {
+    files: [
+      config.build + '/**/*'
+    ],
+    options: {
+      livereload: true
+    }
+  },
   gruntfile: {
-    files: ['Gruntfile.js'],
+    files: [
+      'Gruntfile.js',
+      'gruntconfig/**/*.js'
+    ],
     tasks: ['jshint:gruntfile']
   }
 };

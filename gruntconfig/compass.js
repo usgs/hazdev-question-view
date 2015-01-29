@@ -5,9 +5,9 @@ var config = require('./config');
 var compass = {
   dev: {
     options: {
-      sassDir: config.src,
-      cssDir: config.build,
-      environment: 'development'
+      cssDir: config.build + '/' + config.src,
+      environment: 'development',
+      sassDir: config.src
     }
   }
 };

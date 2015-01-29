@@ -17,7 +17,8 @@ var config = {
     'grunt-contrib-copy',
     'grunt-contrib-cssmin',
     'grunt-contrib-jshint',
-    'grunt-contrib-watch'
+    'grunt-contrib-uglify',
+    'grunt-contrib-watch',
     'grunt-mocha-phantomjs'
   ]
 };

@@ -9,6 +9,13 @@ var compass = {
       environment: 'development',
       sassDir: config.src
     }
+  },
+  example: {
+    options: {
+      cssDir: config.build + '/example',
+      environment: 'development',
+      sassDir: config.example
+    }
   }
 };
 

@@ -19,7 +19,7 @@ var browserify = {
   'example'
 ].forEach(function (bundle) {
   browserify[bundle] = {
-    src: config.example + '/' + bundle + '.js',
+    src: config.test + '/' + bundle + '.js',
     dest: config.build + '/' + config.example + '/' + bundle + '.js'
   };
 });
@@ -36,8 +36,7 @@ var browserify = {
 
 // test bundles
 [
-  'index',
-  'QuestionViewTest'
+  'index'
 ].forEach(function (bundle) {
   browserify[bundle] = {
     src: config.test + '/' + bundle + '.js',

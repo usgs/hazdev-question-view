@@ -8,9 +8,9 @@ var uglify = {
   }
 };
 
-uglify.build.files[config.dist + '/index.js'] =
-    config.build + '/example/index.js';
+uglify.build.files[config.dist + '/example.js'] =
+    config.build + '/' + config.example + '/example.js';
 uglify.build.files[config.dist + '/QuestionView.js'] =
-    config.build + '/src/QuestionView.js';
+    config.build + '/' + config.src + '/QuestionView.js';
 
 module.exports = uglify;

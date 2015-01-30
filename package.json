@@ -50,7 +50,7 @@
     "grunt-contrib-uglify": "^0.7.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-mocha-phantomjs": "^0.6.0",
-    "hazdev-webutils": "0.0.15",
+    "hazdev-webutils": "usgs/hazdev-webutils",
     "matchdep": "^0.3.0",
     "mocha": "^2.1.0",
     "sinon": "^1.12.2"

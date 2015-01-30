@@ -13,7 +13,7 @@ var connect = {
         config.build + '/' + config.src,
       ],
       livereload: true,
-      open: 'https://localhost:8000',
+      open: 'http://localhost:8000/example.html',
       port: 8000
     }
   },

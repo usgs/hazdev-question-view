@@ -3,18 +3,11 @@
 var config = require('./config');
 
 var compass = {
-  dev: {
+  src: {
     options: {
       cssDir: config.build + '/' + config.src,
       environment: 'development',
       sassDir: config.src
-    }
-  },
-  example: {
-    options: {
-      cssDir: config.build + '/example',
-      environment: 'development',
-      sassDir: config.example
     }
   }
 };

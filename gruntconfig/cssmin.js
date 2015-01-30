@@ -8,7 +8,7 @@ var cssmin = {
   }
 };
 
-cssmin.dist.files[config.dist + '/index.css'] = [
+cssmin.dist.files[config.dist + '/QuestionView.css'] = [
   config.build + '/' + config.src + '/QuestionView.css'
 ];
 

@@ -5,7 +5,6 @@ var config = require('./config');
 var watch = {
   scripts: {
     files: [
-      config.example + '/**/*.js',
       config.src + '/**/*.js',
       config.test + '/**/*.js'
     ],
@@ -13,15 +12,13 @@ var watch = {
   },
   html: {
     files: [
-      config.example + '/*.html',
       config.test + '/*.html'
     ],
     tasks: [ 'copy:example', 'copy:test']
   },
   scss: {
     files: [
-      config.src + '/**/*.scss',
-      config.test + '/**/*.scss'
+      config.src + '/**/*.scss'
     ],
     tasks: [
       'compass:dev',

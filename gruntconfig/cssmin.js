@@ -9,7 +9,7 @@ var cssmin = {
 };
 
 cssmin.dist.files[config.dist + '/index.css'] = [
-  config.build + '/' + config.src + '/bundle.css'
+  config.build + '/' + config.src + '/QuestionView.css'
 ];
 
 module.exports = cssmin;

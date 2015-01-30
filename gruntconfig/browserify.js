@@ -14,17 +14,35 @@ var browserify = {
   }
 };
 
-// bundles
+// example bundle
+[
+  'example'
+].forEach(function (bundle) {
+  browserify[bundle] = {
+    src: config.example + '/' + bundle + '.js',
+    dest: config.build + '/' + config.example + '/' + bundle + '.js'
+  };
+});
+
+// source bundle
+[
+  'QuestionView'
+].forEach(function (bundle) {
+  browserify[bundle] = {
+    src: config.src + '/' + bundle + '.js',
+    dest: config.build + '/' + config.src + '/' + bundle + '.js'
+  };
+});
+
+// test bundles
 [
   'index',
   'QuestionViewTest'
 ].forEach(function (bundle) {
-  var targetFile = config.build + '/' + config.test + '/' + bundle + '.js';
-  var sourceFile = config.test + '/' + bundle + '.js';
-
-  browserify[bundle] = {files: {}};
-  browserify[bundle].files[targetFile] = [sourceFile];
+  browserify[bundle] = {
+    src: config.test + '/' + bundle + '.js',
+    dest: config.build + '/' + config.test + '/' + bundle + '.js'
+  };
 });
-
 
 module.exports = browserify;

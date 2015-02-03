@@ -28,16 +28,6 @@ var copy = {
       'index.html'
     ],
     dest: config.build + '/' + config.test
-  },
-
-  mocha: {
-    expand: true,
-    cwd: 'node_modules',
-    src: [
-      'mocha/mocha.js',
-      'mocha/mocha.css'
-    ],
-    dest: config.build + '/' + config.test
   }
 };
 

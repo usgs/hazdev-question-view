@@ -40,14 +40,6 @@ describe('QuestionView test suite', function () {
       expect(typeof QuestionView).to.equal('function');
     });
 
-    it('Can be instantiated.', function () {
-      expect(emptyQuestion).to.be.an.instanceof(QuestionView);
-    });
-
-    it('Inherits from View.', function () {
-      expect(emptyQuestion).to.be.an.instanceof(View);
-    });
-
     it('Sets options on itself.', function () {
       expect(emptyQuestion).to.be.an.instanceof(Object);
     });

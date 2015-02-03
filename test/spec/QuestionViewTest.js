@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach */
+/* global describe, it */
 'use strict';
 
 var chai = require('chai'),
@@ -9,7 +9,7 @@ var chai = require('chai'),
 
 var expect = chai.expect;
 
-var emptyQuestion = new QuestionView({
+var emptyQuestion = QuestionView({
   answers:[
     {
       value:null,
@@ -35,7 +35,6 @@ var getBlurEvent = function () {
 };
 
 describe('QuestionView test suite', function () {
-
   describe('_initialize()', function () {
     it('Is defined', function () {
       expect(typeof QuestionView).to.equal('function');
@@ -59,23 +58,12 @@ describe('QuestionView test suite', function () {
       /* jshint +W030 */
     });
 
-    it('Has all expected methods.', function () {
-      expect(emptyQuestion).to.respondTo('_addAnswer');
-      expect(emptyQuestion).to.respondTo('_addAnswers');
-      expect(emptyQuestion).to.respondTo('_initialize');
-      expect(emptyQuestion).to.respondTo('_onChange');
-      expect(emptyQuestion).to.respondTo('_onBlur');
+    it('Has all expected public methods.', function () {
       expect(emptyQuestion).to.respondTo('clearAnswers');
       expect(emptyQuestion).to.respondTo('destroy');
       expect(emptyQuestion).to.respondTo('getAnswers');
       expect(emptyQuestion).to.respondTo('selectAnswers');
       expect(emptyQuestion).to.respondTo('setAnswers');
-    });
-
-    it('Has all expected properties.', function () {
-      expect(emptyQuestion).to.have.property('_options');
-      expect(emptyQuestion).to.have.property('_answerList');
-      expect(emptyQuestion).to.have.property('_answerIndex');
     });
 
     it('Has proper default attributes.', function () {
@@ -92,7 +80,8 @@ describe('QuestionView test suite', function () {
   describe('_onChange()', function () {
 
     it('Enables "other" input when selected.', function () {
-      var question = new QuestionView({
+
+      var question = QuestionView({
         label:'This one uses an "other" box',
         multiSelect:false,
         answers:[
@@ -108,7 +97,8 @@ describe('QuestionView test suite', function () {
           }
         ]
       });
-      var answerList = question._answerList,
+
+      var answerList = question.el.querySelector('fieldset'),
           answerElement = answerList.getElementsByTagName('li'),
           inputs = answerElement[1].getElementsByTagName('input');
 
@@ -119,7 +109,7 @@ describe('QuestionView test suite', function () {
     });
 
     it('Disables "other" input when de-selected.', function () {
-      var question = new QuestionView({
+      var question = QuestionView({
         label:'This one uses an "other" box',
         multiSelect:false,
         answers:[
@@ -135,7 +125,7 @@ describe('QuestionView test suite', function () {
           }
         ]
       });
-      var answerList = question._answerList,
+      var answerList = question.el.querySelector('fieldset'),
           answerElement = answerList.getElementsByTagName('li'),
           inputs = answerElement[1].getElementsByTagName('input');
 
@@ -151,7 +141,7 @@ describe('QuestionView test suite', function () {
 
     it('Triggers change event when value has changed.', function () {
       var spy = sinon.spy();
-      var question = new QuestionView({
+      var question = QuestionView({
         label:'This one uses an "other" box',
         multiSelect:false,
         selectedAnswer:'second-answer',
@@ -168,7 +158,7 @@ describe('QuestionView test suite', function () {
           }
         ]
       });
-      var answerList = question._answerList,
+      var answerList = question.el.querySelector('fieldset'),
           answerElement = answerList.getElementsByTagName('li'),
           inputs = answerElement[1].getElementsByTagName('input');
 
@@ -186,27 +176,8 @@ describe('QuestionView test suite', function () {
     });
   });
 
-  describe('destroy()', function () {
-    var q = new QuestionView({
-      answers:[
-        {
-          value:null,
-          label:null
-        }
-      ]
-    });
-
-    it('Sould be null after destroyed.', function () {
-      /* jshint -W030 */
-        expect(q._answerList).to.not.be.null;
-        q.destroy();
-        expect(q._answerList).to.be.null;
-    });
-
-  });
-
   describe('getAnswers()', function () {
-    var question1 = new QuestionView({
+    var question1 = QuestionView({
       label:'This one uses an "other" box',
       multiSelect:false,
       selectedAnswer:'second-answer',
@@ -223,7 +194,7 @@ describe('QuestionView test suite', function () {
         }
       ]
     });
-    var question2 = new QuestionView({
+    var question2 = QuestionView({
       label:'These ones are in a div',
       multiSelect:true,
       selectedAnswer:[
@@ -270,7 +241,7 @@ describe('QuestionView test suite', function () {
   });
 
   describe('setAnswers()', function () {
-    var question1 = new QuestionView({
+    var question1 = QuestionView({
       label:'This one uses an "other" box',
       multiSelect:false,
       answers:[
@@ -286,7 +257,7 @@ describe('QuestionView test suite', function () {
         }
       ]
     });
-    var question2 = new QuestionView({
+    var question2 = QuestionView({
       label:'These ones are in a div',
       multiSelect:true,
       answers:[

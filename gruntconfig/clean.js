@@ -4,8 +4,9 @@ var config = require('./config');
 
 var clean = {
   build: [
-    '.sass-cache',
-    config.build
+    config.build,
+    config.dist,
+    '.sass-cache'
   ],
   dist: [
     config.dist

@@ -21,11 +21,11 @@ var copy = {
     dest: config.build + '/' + config.example
   },
 
-  test: {
+  build: {
     expand: true,
     cwd: config.test,
     src: [
-      'index.html'
+      'test.html'
     ],
     dest: config.build + '/' + config.test
   }

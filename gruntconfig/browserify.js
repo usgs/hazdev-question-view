@@ -36,7 +36,7 @@ var browserify = {
 
 // test bundles
 [
-  'index'
+  'test'
 ].forEach(function (bundle) {
   browserify[bundle] = {
     src: config.test + '/' + bundle + '.js',

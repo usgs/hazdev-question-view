@@ -20,10 +20,11 @@ var connect = {
   test: {
     options: {
       base: [
-        config.build + '/' + config.test,
         config.build + '/' + config.src,
+        config.build + '/' + config.test,
         'node_modules'
       ],
+      open: 'http://localhost:8001/test.html',
       port: 8001
     }
   },

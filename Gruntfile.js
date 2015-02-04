@@ -40,6 +40,7 @@ module.exports = function (grunt) {
 
   // creates distributable version of library
   grunt.registerTask('build', taskList([
+    'clean',
     'dev',
     'cssmin',
     'uglify'
@@ -72,5 +73,4 @@ module.exports = function (grunt) {
     'connect:test',
     'mocha_phantomjs'
   ]));
-
 };

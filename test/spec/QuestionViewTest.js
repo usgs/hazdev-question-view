@@ -2,7 +2,7 @@
 'use strict';
 
 var chai = require('chai'),
-    QuestionView = require('QuestionView'),
+    QuestionView = require('questionview/QuestionView'),
     sinon = require('sinon'),
     View = require('mvc/View');
 

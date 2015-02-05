@@ -1,6 +1,6 @@
 // 'use strict';
 
-var QuestionView = require('QuestionView');
+var QuestionView = require('questionview/QuestionView');
 
 
 // Callback function for question change events

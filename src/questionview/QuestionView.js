@@ -4,15 +4,20 @@ var Util = require('util/Util'),
     View = require('mvc/View');
 
 
+// Default values used by constructor.
 var _DEFAULTS = {
-  label:null,          // The question being asked
-  multiSelect:false,   // For radio buttons or checkboxes, radio is default
-  selectedAnswer:null, // Any answers that should be selected by default
-  answers:null        // Array of answers, each with attributes:
-                      //  value - The "value" for the input
-                      //  label - The answer to show the user
-                      //  otherValue - optional extra value for more info
-                      //  otherLabel - Question to ask associate with otherValue
+  // label - The question being asked
+  label: null,
+  // multiSelect - false = radio buttons, true = or checkboxes, radio is default
+  multiSelect: false,
+  // selectedAnswer - Any answers that should be selected by default
+  selectedAnswer: null,
+  // answers - Array of answers, each with attributes:
+  //      value - The "value" for the input
+  //      label - The answer to show the user
+  //      otherValue - Optional extra value for more info
+  //      otherLabel - Question to ask associate with otherValue
+  answers: null
 };
 var ID_SEQUENCE = 0;
 

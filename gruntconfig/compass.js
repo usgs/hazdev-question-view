@@ -7,7 +7,10 @@ var compass = {
     options: {
       cssDir: config.build + '/' + config.src,
       environment: 'development',
-      sassDir: config.src
+      sassDir: config.src + '/questionview',
+      specify: [
+        config.src + '/questionview/hazdev-question-view.scss'
+      ]
     }
   }
 };

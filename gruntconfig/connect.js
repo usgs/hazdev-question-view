@@ -34,6 +34,7 @@ var connect = {
         config.dist
       ],
       keepalive: true,
+      livereload: true,
       open: 'http://localhost:8002/example.html',
       port: 8002
     }

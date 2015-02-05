@@ -12,15 +12,6 @@ var copy = {
     dest: config.dist
   },
 
-  example: {
-    expand: true,
-    cwd: config.test,
-    src: [
-      'example.html'
-    ],
-    dest: config.build + '/' + config.example
-  },
-
   build: {
     expand: true,
     cwd: config.test,

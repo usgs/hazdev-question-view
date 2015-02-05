@@ -19,7 +19,8 @@ var _DEFAULTS = {
   //      otherLabel - Question to ask associate with otherValue
   answers: null
 };
-var ID_SEQUENCE = 0;
+
+var _ID_SEQUENCE = 0;
 
 
 // ----------------------------------------------------------------------
@@ -79,7 +80,7 @@ var QuestionView = function (options) {
    *
    */
   _addAnswer = function (answer, qId, ul) {
-    var answerId = 'answer-' + (++ID_SEQUENCE),
+    var answerId = 'answer-' + (++_ID_SEQUENCE),
         inputType = (_options.multiSelect ? 'checkbox' : 'radio'),
         li = document.createElement('li'),
         label = document.createElement('label'),
@@ -123,7 +124,7 @@ var QuestionView = function (options) {
   _addAnswers = function () {
     var answers = _options.answers,
         answerElement,
-        questionId = 'question-' + (++ID_SEQUENCE),
+        questionId = 'question-' + (++_ID_SEQUENCE),
         legend = document.createElement('legend'),
         ul = document.createElement('ul'),
         answerIndex = _answerIndex,

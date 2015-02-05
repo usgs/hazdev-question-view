@@ -14,23 +14,18 @@ var browserify = {
   }
 };
 
-// example bundle
-[
-  'example'
-].forEach(function (bundle) {
-  browserify[bundle] = {
-    src: config.test + '/' + bundle + '.js',
-    dest: config.build + '/' + config.example + '/' + bundle + '.js'
-  };
-});
-
 // source bundle
 [
-  'QuestionView'
+  'hazdev-question-view'
 ].forEach(function (bundle) {
   browserify[bundle] = {
-    src: config.src + '/' + bundle + '.js',
-    dest: config.build + '/' + config.src + '/' + bundle + '.js'
+    src: [],
+    dest: config.build + '/' + config.src + '/' + bundle + '.js',
+    options: {
+      alias: [
+        './' + config.src + '/questionview/QuestionView.js:questionview/QuestionView'
+      ]
+    }
   };
 });
 
@@ -40,7 +35,12 @@ var browserify = {
 ].forEach(function (bundle) {
   browserify[bundle] = {
     src: config.test + '/' + bundle + '.js',
-    dest: config.build + '/' + config.test + '/' + bundle + '.js'
+    dest: config.build + '/' + config.test + '/' + bundle + '.js',
+    options: {
+      external: [
+        'questionview/QuestionView'
+      ]
+    }
   };
 });
 

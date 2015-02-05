@@ -28,11 +28,11 @@ var _ID_SEQUENCE = 0;
 // ----------------------------------------------------------------------
 
 /**
- * @constructor
+ * Class: QuestionView
  * Creates a new QuestionView.
  *
  * @param options {Object}
- *        An object containing configuration options. See _DEFAULTS for
+ *        An object containing configuration options. See _DEFAULTS above for
  *        detailed documentation on what can be specified.
  */
 var QuestionView = function (options) {
@@ -48,8 +48,12 @@ var QuestionView = function (options) {
       _onBlur,
       _onChange;
 
-  _this = View(options);
 
+  _this = View(options);
+  /**
+   * @constructor
+   *
+   */
   _initialize = function () {
     var section = document.createElement('section');
 
@@ -59,7 +63,6 @@ var QuestionView = function (options) {
     section.classList.add('question');
 
     section.appendChild(_addAnswers());
-    // _addAnswers();
 
     _this.setAnswers(_options.selectedAnswer);
 
@@ -113,7 +116,6 @@ var QuestionView = function (options) {
     ul.appendChild(li);
   };
 
-
   /**
    * Add all answers to the list of answers.
    *
@@ -159,11 +161,9 @@ var QuestionView = function (options) {
         }
       }
     }
-    // _this.el.appendChild(_answerList);
 
     return _answerList;
   };
-
 
   /**
    * Event listener for "other" inputs.
@@ -189,7 +189,6 @@ var QuestionView = function (options) {
       }
     }
   };
-
 
   /**
    * Event listener for "other" inputs.

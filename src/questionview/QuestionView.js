@@ -83,12 +83,16 @@ var QuestionView = function (options) {
    *
    */
   _addAnswer = function (answer, qId, ul) {
-    var answerId = 'answer-' + (++_ID_SEQUENCE),
+    var _label = answer.label,
+        _otherLabel = answer.otherLabel,
+        _otherValue = answer.otherValue,
+        _value = answer.value,
+        answerId = 'answer-' + (++_ID_SEQUENCE),
         inputType = (_options.multiSelect ? 'checkbox' : 'radio'),
         li = document.createElement('li'),
         label = document.createElement('label'),
         input = document.createElement('input'),
-        answerText = document.createTextNode(answer.label);
+        answerText = document.createTextNode(_label);
 
     label.for = answerId;
     label.classList.add('answer');
@@ -96,21 +100,21 @@ var QuestionView = function (options) {
     input.type = inputType;
     input.name = qId;
     input.id = answerId;
-    input.value = answer.value;
+    input.value = _value;
 
     label.appendChild(input);
     label.appendChild(answerText);
 
     li.appendChild(label);
 
-    if (typeof answer.otherLabel === 'string') {
+    if (typeof _otherLabel === 'string') {
       var textbox = document.createElement('input');
       textbox.type = 'text';
       textbox.name = qId + '-other';
       textbox.id = answerId + '-other';
-      textbox.value = answer.otherValue;
+      textbox.value = _otherValue;
       textbox.classList.add('other');
-      textbox.placeholder = answer.otherLabel;
+      textbox.placeholder = _otherLabel;
       li.appendChild(textbox);
     }
     ul.appendChild(li);
@@ -172,7 +176,7 @@ var QuestionView = function (options) {
    *
    */
   _onBlur = function (ev) {
-    var target = ev.target,
+    var _target = ev.target,
         answers = _options.answers,
         answerElement = _answerList.getElementsByTagName('li'),
         i,
@@ -180,9 +184,9 @@ var QuestionView = function (options) {
 
     for (i=0; i<len; i++) {
       var inputs = answerElement[i].getElementsByTagName('input');
-      if (inputs[1] === target) {
-        if (answers[i].otherValue !== target.value) {
-          answers[i].otherValue = target.value;
+      if (inputs[1] === _target) {
+        if (answers[i].otherValue !== _target.value) {
+          answers[i].otherValue = _target.value;
           _this.trigger('change', _this);
         }
         break;
@@ -198,7 +202,7 @@ var QuestionView = function (options) {
    *
    */
   _onChange = function (ev) {
-    var target = ev.target,
+    var _target = ev.target,
         answerElement = _answerList.getElementsByTagName('li'),
         i,
         len = answerElement.length,
@@ -211,7 +215,7 @@ var QuestionView = function (options) {
         checked = inputs[0].checked;
         inputs[1].disabled = !checked;
         // If the "other" input checkbox for this textbox is target
-        if (inputs[0] === target && checked) {
+        if (inputs[0] === _target && checked) {
           inputs[1].focus();
           inputs[1].setSelectionRange(0, inputs[1].value.length);
         }

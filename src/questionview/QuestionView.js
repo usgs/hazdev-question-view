@@ -4,7 +4,7 @@ var Util = require('util/Util'),
     View = require('mvc/View');
 
 
-var DEFAULTS = {
+var _DEFAULTS = {
   label:null,          // The question being asked
   multiSelect:false,   // For radio buttons or checkboxes, radio is default
   selectedAnswer:null, // Any answers that should be selected by default
@@ -26,7 +26,7 @@ var ID_SEQUENCE = 0;
  * Creates a new QuestionView.
  *
  * @param options {Object}
- *        An object containing configuration options. See DEFAULTS for
+ *        An object containing configuration options. See _DEFAULTS for
  *        detailed documentation on what can be specified.
  */
 var QuestionView = function (options) {
@@ -47,7 +47,7 @@ var QuestionView = function (options) {
   _initialize = function () {
     var section = document.createElement('section');
 
-    _options = Util.extend({}, DEFAULTS, options);
+    _options = Util.extend({}, _DEFAULTS, options);
     _answerIndex = [];
 
     section.classList.add('question');

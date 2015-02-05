@@ -3,14 +3,10 @@
 var config = require('./config');
 
 var uglify = {
-  build: {
-    files: {}
+  dist: {
+    src: config.build + '/' + config.src + '/hazdev-question-view.js',
+    dest: config.dist + '/hazdev-question-view.js'
   }
 };
-
-uglify.build.files[config.dist + '/example.js'] =
-    config.build + '/' + config.example + '/example.js';
-uglify.build.files[config.dist + '/QuestionView.js'] =
-    config.build + '/' + config.src + '/QuestionView.js';
 
 module.exports = uglify;

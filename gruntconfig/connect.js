@@ -9,8 +9,8 @@ var connect = {
   dev: {
     options: {
       base: [
-        config.build + '/' + config.example,
-        config.build + '/' + config.src,
+        config.example,
+        config.build + '/' + config.src
       ],
       livereload: true,
       open: 'http://localhost:8000/example.html',

@@ -11,37 +11,27 @@ var browserify = {
         process.cwd() + '/node_modules/hazdev-webutils/src'
       ]
     }
-  }
-};
+  },
 
-// source bundle
-[
-  'hazdev-question-view'
-].forEach(function (bundle) {
-  browserify[bundle] = {
+  source: {
     src: [],
-    dest: config.build + '/' + config.src + '/' + bundle + '.js',
+    dest: config.build + '/' + config.src + '/hazdev-question-view.js',
     options: {
       alias: [
         './' + config.src + '/questionview/QuestionView.js:questionview/QuestionView'
       ]
     }
-  };
-});
+  },
 
-// test bundles
-[
-  'test'
-].forEach(function (bundle) {
-  browserify[bundle] = {
-    src: config.test + '/' + bundle + '.js',
-    dest: config.build + '/' + config.test + '/' + bundle + '.js',
+  test: {
+    src: config.test + '/test.js',
+    dest: config.build + '/' + config.test + '/test.js',
     options: {
       external: [
         'questionview/QuestionView'
       ]
     }
-  };
-});
+  }
+};
 
 module.exports = browserify;

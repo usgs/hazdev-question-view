@@ -54,7 +54,7 @@ var QuestionView = function (options) {
    * @constructor
    *
    */
-  _initialize = function () {
+  _initialize = function (options) {
     var section = document.createElement('section');
 
     _options = Util.extend({}, _DEFAULTS, options);
@@ -378,7 +378,8 @@ var QuestionView = function (options) {
     }
   };
 
-  _initialize();
+  _initialize(options);
+  options = null;
   return _this;
 };
 

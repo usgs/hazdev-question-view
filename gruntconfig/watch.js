@@ -26,7 +26,8 @@ var watch = {
   },
   reload: {
     files: [
-      config.build + '/**/*'
+      config.build + '/**/*',
+      config.example + '/**/*'
     ],
     options: {
       livereload: true

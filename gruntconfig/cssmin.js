@@ -4,12 +4,9 @@ var config = require('./config');
 
 var cssmin = {
   dist: {
-    files: {}
+    dest: config.dist + '/hazdev-question-view.css',
+    src: [config.build + '/' + config.src + '/hazdev-question-view.css']
   }
 };
-
-cssmin.dist.files[config.dist + '/QuestionView.css'] = [
-  config.build + '/' + config.src + '/QuestionView.css'
-];
 
 module.exports = cssmin;

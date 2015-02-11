@@ -1,8 +1,7 @@
-/* global describe, it, chai */
+/* global describe, it, chai, sinon */
 'use strict';
 
 var QuestionView = require('questionview/QuestionView'),
-    sinon = require('sinon'),
     View = require('mvc/View');
 
 

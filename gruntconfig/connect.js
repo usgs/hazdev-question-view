@@ -31,7 +31,8 @@ var connect = {
   dist: {
     options: {
       base: [
-        config.dist
+        config.dist,
+        config.example
       ],
       keepalive: true,
       livereload: true,

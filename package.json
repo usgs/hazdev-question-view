@@ -11,8 +11,18 @@
     "name": "Eddie McWhirter",
     "email": "emcwhirter@usgs.gov"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "Jeremy Fee",
+      "email": "jmfee@usgs.gov"
+    },
+    {
+      "name": "Jonathan Brown",
+      "email": "jdbrown@usgs.gov"
+    }
+  ],
   "keywords": [
+    "question",
     "usgs",
     "ehp",
     "hazdev"

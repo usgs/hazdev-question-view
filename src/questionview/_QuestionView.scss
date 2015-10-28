@@ -1,0 +1,14 @@
+.question > fieldset {
+  border: none;
+}
+
+.question-answers {
+  list-style-type: none;
+  padding-left: 1em;
+
+  > li {
+    margin-bottom: 3px;
+    padding-left: 2.2em;
+    text-indent: -2.2em;
+  }
+}

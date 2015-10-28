@@ -49,8 +49,8 @@ module.exports = function (grunt) {
   // default task useful during development
   grunt.registerTask('default', taskList([
     'dev',
-    'connect:template',
     'configureProxies:dev',
+    'connect:template',
     'connect:dev',
     'test',
     'watch'
@@ -66,8 +66,8 @@ module.exports = function (grunt) {
   // starts distribution server and preview
   grunt.registerTask('dist', taskList([
     'build',
-    'connect:template',
     'configureProxies:dist',
+    'connect:template',
     'connect:dist'
   ]));
 

@@ -42,13 +42,15 @@ module.exports = function (grunt) {
   grunt.registerTask('build', taskList([
     'clean',
     'dev',
-    'cssmin',
+    'postcss:dist',
     'uglify'
   ]));
 
   // default task useful during development
   grunt.registerTask('default', taskList([
     'dev',
+    'connect:template',
+    'configureProxies:dev',
     'connect:dev',
     'test',
     'watch'
@@ -57,13 +59,15 @@ module.exports = function (grunt) {
   // builds development version of library
   grunt.registerTask('dev', taskList([
     'browserify',
-    'compass',
+    'postcss:dev',
     'copy'
   ]));
 
   // starts distribution server and preview
   grunt.registerTask('dist', taskList([
     'build',
+    'connect:template',
+    'configureProxies:dist',
     'connect:dist'
   ]));
 

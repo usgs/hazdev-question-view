@@ -8,20 +8,26 @@ var watch = {
       config.src + '/**/*.js',
       config.test + '/**/*.js'
     ],
-    tasks: ['jshint:scripts', 'browserify', 'mocha_phantomjs']
+    tasks: [
+      'jshint:scripts',
+      'browserify',
+      'mocha_phantomjs'
+    ]
   },
   html: {
     files: [
       config.test + '/*.html'
     ],
-    tasks: ['copy:test']
+    tasks: [
+      'copy:test'
+    ]
   },
   scss: {
     files: [
       config.src + '/**/*.scss'
     ],
     tasks: [
-      'compass'
+      'postcss:dev'
     ]
   },
   reload: {
@@ -30,7 +36,7 @@ var watch = {
       config.example + '/**/*'
     ],
     options: {
-      livereload: true
+      livereload: config.liveReloadPort
     }
   },
   gruntfile: {
@@ -38,7 +44,9 @@ var watch = {
       'Gruntfile.js',
       'gruntconfig/**/*.js'
     ],
-    tasks: ['jshint:gruntfile']
+    tasks: [
+      'jshint:gruntfile'
+    ]
   }
 };
 

@@ -1,0 +1,16 @@
+.question > fieldset {
+  border: none;
+}
+
+.question-answers {
+  list-style-type: none;
+  padding-left: 1em;
+
+  > li {
+    margin-bottom: 3px;
+  }
+}
+
+input.question-other {
+  margin-left: 2.5em;
+}

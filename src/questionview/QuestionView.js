@@ -94,17 +94,16 @@ var QuestionView = function (options) {
         input = document.createElement('input'),
         answerText = document.createTextNode(_label);
 
-    label.for = answerId;
-    label.classList.add('answer');
-
     input.type = inputType;
     input.name = qId;
     input.id = answerId;
     input.value = _value;
 
-    label.appendChild(input);
+    label.setAttribute('for', answerId);
+    label.classList.add('answer');
     label.appendChild(answerText);
 
+    li.appendChild(input);
     li.appendChild(label);
 
     if (typeof _otherLabel === 'string') {
@@ -113,7 +112,7 @@ var QuestionView = function (options) {
       textbox.name = qId + '-other';
       textbox.id = answerId + '-other';
       textbox.value = _otherValue;
-      textbox.classList.add('other');
+      textbox.classList.add('question-other');
       textbox.placeholder = _otherLabel;
       li.appendChild(textbox);
     }
@@ -138,6 +137,7 @@ var QuestionView = function (options) {
         i,
         len;
 
+    ul.classList.add('question-answers');
     _answerList = document.createElement('fieldset');
     _answerList.name = questionId;
     legend.textContent = options.label;
